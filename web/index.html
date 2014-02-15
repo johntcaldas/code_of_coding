@@ -6,8 +6,6 @@
     <!-- Bootstrap core CSS -->
     <link href="lib/bootstrap-3.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for narrow jumbotron -->
-    <link href="lib/bootstrap-3.1.0/dist/css/bootstrap_narrow_jumbotron.css" rel="stylesheet">
 </head>
 
 <body>
@@ -15,19 +13,50 @@
 
     <!-- Top Nav -->
     <div class="header">
+        <!--
         <ul class="nav nav-pills pull-right">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-        <h3 class="text-muted">Code of Coding</h3>
+        -->
+        <h3>Code of Coding</h3>
     </div>
+
+    <div class="row">
+
+        <!-- Navigation Buttons -->
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked" id="myTabs">
+                <li class="active"><a href="#home">Home</a></li>
+                <li><a href="#profile">Profile</a></li>
+                <li><a href="#messages">Messages</a></li>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="col-md-10">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home"></div>
+                <div class="tab-pane fade" id="profile"></div>
+                <div class="tab-pane fade" id="messages"></div>
+            </div>
+        </div>
+
+    </div>
+
+
 
 </div> <!-- /container -->
 
-
 <!-- Placed at the end of the document so the pages load faster -->
 <script type=text/javascript src="lib/jquery-1.8.3.min.js"></script>
+<script type=text/javascript src="lib/underscore-min.js"></script>
+<script type=text/javascript src="lib/backbone-min.js"></script>
+<script type=text/javascript src="lib/handlebars.runtime-v1.3.0.js"></script>
+<script type=text/javascript src="lib/bootstrap-3.1.0/dist/js/bootstrap.min.js"></script>
 
+<script type=text/javascript src="js/handlebars-templates.js"></script>
+<script type=text/javascript src="js/main.js"></script>
 </body>
 </html>

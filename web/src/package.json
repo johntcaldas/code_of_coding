@@ -1,0 +1,16 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "description": "Code of Coding",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-handlebars": "~0.6.1",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
