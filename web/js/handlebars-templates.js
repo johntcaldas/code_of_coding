@@ -6,16 +6,16 @@ helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partial
   var buffer = "", stack1, self=this;
 
 
-  buffer += "<!-- Header -->\n<div class=\"header\">\n    <!--\n    <ul class=\"nav nav-pills pull-right\">\n        <li class=\"active\"><a href=\"#\">Home</a></li>\n        <li><a href=\"#\">About</a></li>\n        <li><a href=\"#\">Contact</a></li>\n    </ul>\n    -->\n    <h3>Code of Coding</h3>\n</div>\n\n\n<!-- Navigation Buttons -->\n<div class=\"row\">\n<div class=\"col-md-2 left-nav\">\n    <ul class=\"nav nav-pills nav-stacked\" id=\"myTabs\">\n        <li class=\"active\"><a href=\"#home\" data-toggle=\"pill\">Home</a></li>\n        <li><a href=\"#system_info\" data-toggle=\"pill\">System Info</a></li>\n        <li><a href=\"#story\" data-toggle=\"pill\">Story</a></li>\n    </ul>\n</div>\n\n\n<!-- Content -->\n<div class=\"col-md-10\">\n    <div class=\"tab-content\">\n        <div id=\"home\" class=\"tab-pane fade in active\">";
+  buffer += "<!-- Header -->\n<nav class=\"navbar navbar-default\" role=\"navigation\">\n    <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand\" href=\"#\">Code Of Coding</a>\n        </div>\n\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n            <ul class=\"nav navbar-nav\">\n                <li class=\"active\"><a href=\"#home\" data-toggle=\"pill\">Home</a></li>\n                <li><a href=\"#system_info\" data-toggle=\"pill\">System Info</a></li>\n                <li><a href=\"#story\" data-toggle=\"pill\">Story</a></li>\n            </ul>\n        </div><!-- /.navbar-collapse -->\n    </div><!-- /.container-fluid -->\n</nav>\n\n<!-- Content -->\n<div id=\"top_level_content\" class=\"tab-content\">\n    <div id=\"home\" class=\"tab-pane fade in active\">";
   stack1 = self.invokePartial(partials['handlebars/home.handlebars'], 'handlebars/home.handlebars', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n        <div id=\"system_info\" class=\"tab-pane fade\">";
+  buffer += "</div>\n    <div id=\"system_info\" class=\"tab-pane fade\">";
   stack1 = self.invokePartial(partials['handlebars/system_info.handlebars'], 'handlebars/system_info.handlebars', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n        <div id=\"story\" class=\"tab-pane fade\">";
+  buffer += "</div>\n    <div id=\"story\" class=\"tab-pane fade\">";
   stack1 = self.invokePartial(partials['handlebars/story.handlebars'], 'handlebars/story.handlebars', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</div>\n    </div>\n</div>\n</div>";
+  buffer += "</div>\n</div>\n";
   return buffer;
   });
 

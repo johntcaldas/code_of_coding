@@ -1,3 +1,9 @@
-.left-nav {
-    margin-top: 2em;
+/******************
+* Color Reference *
+******************/
+.bodyBackground { color: #272b30; }
+
+
+#top_level_content {
+    margin-top: 4em;
 }
