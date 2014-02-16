@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 
-    <!-- Top Nav -->
+    <!-- Header -->
     <div class="header">
         <!--
         <ul class="nav nav-pills pull-right">
@@ -26,26 +26,8 @@
         <h3>Code of Coding</h3>
     </div>
 
-    <div id="nav_container_div" class="row">
-
-        <!-- Navigation Buttons -->
-        <div class="col-md-2 left-nav">
-            <ul class="nav nav-pills nav-stacked" id="myTabs">
-                <li class="active"><a href="#home">Home</a></li>
-                <li><a href="#profile">System Info</a></li>
-                <li><a href="#messages">Story</a></li>
-            </ul>
-        </div>
-
-        <!-- Content -->
-        <div class="col-md-10">
-            <div class="tab-content">
-                <div id="home_div" class="tab-pane fade in active"></div>
-                <div id="system_info_div" class="tab-pane fade"></div>
-                <div id="messages_div" class="tab-pane fade"></div>
-            </div>
-        </div>
-
+    <!-- Body -->
+    <div id="body_container_div" class="row">
     </div>
 
 
@@ -53,13 +35,16 @@
 </div> <!-- /container -->
 
 <!-- Placed at the end of the document so the pages load faster -->
+<!-- Libraries -->
 <script type=text/javascript src="lib/jquery-1.8.3.min.js"></script>
 <script type=text/javascript src="lib/underscore-min.js"></script>
 <script type=text/javascript src="lib/backbone-min.js"></script>
 <script type=text/javascript src="lib/handlebars.runtime-v1.3.0.js"></script>
 <script type=text/javascript src="lib/bootstrap-3.1.0/dist/js/bootstrap.min.js"></script>
 
+<!-- Our Stuff -->
 <script type=text/javascript src="js/handlebars-templates.js"></script>
 <script type=text/javascript src="js/main.js"></script>
+
 </body>
 </html>
