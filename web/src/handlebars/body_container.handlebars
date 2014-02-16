@@ -1,17 +1,33 @@
+<!-- Header -->
+<div class="header">
+    <!--
+    <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+    -->
+    <h3>Code of Coding</h3>
+</div>
+
+
 <!-- Navigation Buttons -->
+<div class="row">
 <div class="col-md-2 left-nav">
     <ul class="nav nav-pills nav-stacked" id="myTabs">
-        <li class="active"><a href="">Home</a></li>
-        <li><a href="#systeminfo">System Info</a></li>
-        <li><a href="#story">Story</a></li>
+        <li class="active"><a href="#home" data-toggle="pill">Home</a></li>
+        <li><a href="#system_info" data-toggle="pill">System Info</a></li>
+        <li><a href="#story" data-toggle="pill">Story</a></li>
     </ul>
 </div>
+
 
 <!-- Content -->
 <div class="col-md-10">
     <div class="tab-content">
-        <div id="home_div" class="tab-pane fade in active">{{>handlebars/home.handlebars}}</div>
-        <div id="system_info_div" class="tab-pane fade">{{>handlebars/system_info.handlebars}}</div>
-        <div id="messages_div" class="tab-pane fade"></div>
+        <div id="home" class="tab-pane fade in active">{{>handlebars/home.handlebars}}</div>
+        <div id="system_info" class="tab-pane fade">{{>handlebars/system_info.handlebars}}</div>
+        <div id="story" class="tab-pane fade">{{>handlebars/story.handlebars}}</div>
     </div>
+</div>
 </div>

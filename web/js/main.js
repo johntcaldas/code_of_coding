@@ -1,25 +1,11 @@
 (function () {
 
     var self = null;
-    var router =  new CodeOfCodingRouter();
-    Backbone.history.start({pushState: true});
 
     /* Contains the topest level navigation elements (eg. home, systeminfo, about, contact etc) */
     var BodyContainer = Backbone.View.extend({
 
-        /*id: "nav_container_div",*/
-
-        events: {
-            "click #home_div": "go_home",
-            "click #system_info_div": "go_system_info"
-        },
-
-        home_div: $('#home_div'),
-        system_info_div: $('#system_info_div'),
-
         initialize: function() {
-            router.on('router:home', this.go_home());
-            router.on('router:systeminfo', this.go_system_info());
             this.render();
         },
 
@@ -27,54 +13,18 @@
             var template = templates['handlebars/body_container.handlebars'];
             var html = template();
             this.$el.html(html);
-        },
-
-        go_home: function() {
-            if(!home_div.hasClass("active")) {
-                system_info_div.removeClass("active");
-                home_div.addClass("active");
-            }
-        },
-
-        go_system_info: function() {
-            if(!system_info_div.hasClass("active")) {
-                home_div.removeClass("active");
-                system_info_div.addClass("active");
-            }
         }
-
     });
 
 
-    var CodeOfCoding = window.CodeOfCoding = function() {this.initialize();};
-
-    CodeOfCoding.prototype = {
-
-        // Remove
-        TEMPLATE_NAME: "",
-        TEMPLATE_SELECTOR: "",
+    var CodeOfCoding = window.CodeOfCoding = function() {initialize();};
 
 
-        initialize: function() {
-            self = this;
-            home_div = $('#home_div');
-            system_info_div = $('#system_info_div');
+    var initialize = function() {
+        self = this;
 
-            var TopLevelNavigation = new BodyContainer({el: $('#body_container_div')})
-
-
-            /*
-            var main_template = templates['handlebars/home.handlebars'];
-            var html = main_template();
-            home_div.html(html);
-
-            var system_info_template = templates['handlebars/system_info.handlebars'];
-            var html = system_info_template();
-            system_info_div.html(html);
-            */
-        }
-
-    }; // end prototype
+        var TopLevelNavigation = new BodyContainer({el: $('#body_container_div')});
+    };
 
 })();
 
