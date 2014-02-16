@@ -1,6 +1,8 @@
 (function () {
 
     var self = null;
+    var router =  new CodeOfCodingRouter();
+    Backbone.history.start({pushState: true});
 
     /* Contains the topest level navigation elements (eg. home, systeminfo, about, contact etc) */
     var BodyContainer = Backbone.View.extend({
@@ -16,6 +18,8 @@
         system_info_div: $('#system_info_div'),
 
         initialize: function() {
+            router.on('router:home', this.go_home());
+            router.on('router:systeminfo', this.go_system_info());
             this.render();
         },
 
@@ -57,6 +61,7 @@
             system_info_div = $('#system_info_div');
 
             var TopLevelNavigation = new BodyContainer({el: $('#body_container_div')})
+
 
             /*
             var main_template = templates['handlebars/home.handlebars'];

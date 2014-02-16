@@ -6,7 +6,7 @@ helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partial
   var buffer = "", stack1, self=this;
 
 
-  buffer += "<!-- Navigation Buttons -->\n<div class=\"col-md-2 left-nav\">\n    <ul class=\"nav nav-pills nav-stacked\" id=\"myTabs\">\n        <li class=\"active\"><a href=\"#home\">Home</a></li>\n        <li><a href=\"#systeminfo\">System Info</a></li>\n        <li><a href=\"#story\">Story</a></li>\n    </ul>\n</div>\n\n<!-- Content -->\n<div class=\"col-md-10\">\n    <div class=\"tab-content\">\n        <div id=\"home_div\" class=\"tab-pane fade in active\">";
+  buffer += "<!-- Navigation Buttons -->\n<div class=\"col-md-2 left-nav\">\n    <ul class=\"nav nav-pills nav-stacked\" id=\"myTabs\">\n        <li class=\"active\"><a href=\"\">Home</a></li>\n        <li><a href=\"#systeminfo\">System Info</a></li>\n        <li><a href=\"#story\">Story</a></li>\n    </ul>\n</div>\n\n<!-- Content -->\n<div class=\"col-md-10\">\n    <div class=\"tab-content\">\n        <div id=\"home_div\" class=\"tab-pane fade in active\">";
   stack1 = self.invokePartial(partials['handlebars/home.handlebars'], 'handlebars/home.handlebars', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</div>\n        <div id=\"system_info_div\" class=\"tab-pane fade\">";
