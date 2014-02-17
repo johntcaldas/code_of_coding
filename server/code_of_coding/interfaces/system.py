@@ -3,7 +3,6 @@ import os
 from flask import jsonify
 
 from code_of_coding import app
-from code_of_coding.services.sensors import SensorService
 from code_of_coding.services.top import TopService
 from code_of_coding.services.disks import DiskService
 from code_of_coding.services.proc import ProcService
@@ -14,18 +13,6 @@ def summary():
     summary_data = proc_service.get_summary()
     return jsonify(summary_data)
 
-@app.route("/system/sensors", methods=['GET'])
-def sensors():
-    sensor_service = SensorService()
-    sensor_data = sensor_service.get_sensor_data()
-
-    return jsonify({
-        'success': True,
-        'cpu_temp': sensor_data['cpu_temp'],
-        'mb_temp': sensor_data['mb_temp'],
-        'vid_temp': sensor_data['vid_temp'],
-        'sensors_by_line': sensor_data['sensors_by_line']
-    })
 
 
 @app.route("/system/top", methods=['GET'])
