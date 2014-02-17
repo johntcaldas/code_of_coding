@@ -43,5 +43,5 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div>\n    <h1>System Information</h1>\n</div>";
+  return "<div id=\"system_info\">\n    <h1>System Information</h1>\n    <div class=\"row\">\n        <div class=\"col-md-6\">\n            <div class=\"well\">\n               Hello!\n            </div>\n        </div>\n        <div class=\"col-md-6\">\n            <div class=\"well\">\n                World!\n            </div>\n        </div>\n    </div>\n</div>";
   });

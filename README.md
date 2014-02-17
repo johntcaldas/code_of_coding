@@ -26,7 +26,7 @@ Using Grunt to Pre-compile Handlebars Templates:
   > This will update package.json with the new dependency
 
 Note: List of current Grunt tasks:
-+ Pre-compile handlebar templates in web/src/handlebars/ into web/js/handlebars-templates.js
++ Pre-compile handlebar templates in web/src/handlebars/ into web/js/handlebars_templates.js
 
 Intellij Setup and Plugins:
 -----------------

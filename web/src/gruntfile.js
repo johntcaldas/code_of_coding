@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         dirs: {
           handlebars_src: 'handlebars/*.handlebars',
-          handlebars_dest: '../js/handlebars-templates.js'
+          handlebars_dest: '../js/handlebars_templates.js'
         },
         watch: {
           handlebars: {
