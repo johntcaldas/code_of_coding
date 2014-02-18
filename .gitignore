@@ -2,3 +2,4 @@
 .idea
 *.iml
 web/src/node_modules/
+web/js/handlebars_templates.js

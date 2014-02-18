@@ -1,20 +1,23 @@
-(function () {
+"use strict";
 
-    var self = null;
+var CodeOfCoding = window.CodeOfCoding = (function () {
+    // constructor
+    var module = function () {
+        // Make any of the compiled templates available as a "partial," or sub-template.
+        Handlebars.partials = templates;
 
-    var CodeOfCoding = window.CodeOfCoding = function() {initialize();};
+        var router = new Router();
+        Backbone.history.start();
+        module.router = router;
 
-    var initialize = function() {
-        self = this;
 
-        var TopLevelNavigation = new BodyContainer({el: $('#body_container_div')});
+        var topLevelNavigation = new BodyContainer({el: $('#body_container_div')});
+        module.topLevelNavigation = topLevelNavigation;
     };
 
+    return module;
 })();
 
 $(document).ready(function() {
-    // Make any of the compiled templates available as a "partial," or sub-template.
-    Handlebars.partials = templates;
-
-    new CodeOfCoding();
+    var codeOfCoding = new CodeOfCoding();
 });

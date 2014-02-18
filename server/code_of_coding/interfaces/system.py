@@ -42,7 +42,7 @@ def get_disks():
     disk_service = DiskService()
     disk_data = disk_service.get_disks()
     return jsonify({
-        'success':True,
+        'success': True,
         'disk_data': disk_data['disk_data'],
         'num_disks': disk_data['num_disks'],
         'num_raid_arrays': disk_data['num_raid_arrays']
