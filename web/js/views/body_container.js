@@ -23,6 +23,4 @@ var BodyContainer = Backbone.View.extend({
         var html = template();
         this.$el.html(html);
     }
-
-
 });

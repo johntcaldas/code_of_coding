@@ -18,8 +18,8 @@ class ProcService():
 
     def get_summary(self):
         ret = {
-            'memory_info': self.get_mem_info()
-            #'up_time': self.get_uptime()
+            'memory_info': self.get_mem_info(),
+            'up_time': self.get_uptime()
         }
 
         return ret
@@ -57,11 +57,11 @@ class ProcService():
         Will come to us in the form:
         {'idle': datetime.timedelta(0, 110, 640000),
          'uptime': datetime.timedelta(0, 24264, 850000)}
-
+        """
         p_uptime = self.proc_fs.uptime
         ret = {
-            'idle': p_uptime.idle,
-            'uptime': p_uptime.uptime
+            'idle_seconds': p_uptime.idle.total_seconds(),
+            'uptime_seconds': p_uptime.uptime.total_seconds()
         }
-        """
-        return datetime.timedelta(0, 114, 180001)
+
+        return ret
