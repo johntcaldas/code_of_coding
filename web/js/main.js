@@ -12,7 +12,7 @@ var CodeOfCoding = window.CodeOfCoding = (function () {
         Backbone.history.start();
         module.router = router;
 
-
+        // Put this in the initialization of the router
         var topLevelNavigation = new BodyContainer({el: $('#body_container_div')});
         module.topLevelNavigation = topLevelNavigation;
     };
