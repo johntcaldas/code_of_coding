@@ -1,5 +1,5 @@
 var SystemSummary = Backbone.Model.extend({
-   urlRoot: 'http://localhost:5000/system/summary',
+   urlRoot: window.COC.serverUrlRoot + '/system/summary',
    defaults: {
        memory_info: {
            buffers_mb: 0,

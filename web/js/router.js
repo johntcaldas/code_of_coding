@@ -1,6 +1,5 @@
 "use strict";
 
-
 var Router = Backbone.Router.extend({
 
     routes: {
@@ -9,3 +8,12 @@ var Router = Backbone.Router.extend({
         "story": "story"               // #story
     }
 });
+
+// Load the router
+(function() {
+    window.COC.router = new Router();
+    Backbone.history.start();
+
+    // Load up the mother of all views.
+    var topLevelNavigation = new BodyContainer({el: $('#body_container_div')});
+})();

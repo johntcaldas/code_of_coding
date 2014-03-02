@@ -6,14 +6,14 @@ var BodyContainer = Backbone.View.extend({
     initialize: function() {
         this.render();
 
-        CodeOfCoding.router.on('route:home', function() {
+        window.COC.router.on('route:home', function() {
             // Calling show on the <a> of a nav tells bootstrap
             $('a[href="#home"]').tab('show');
         });
-        CodeOfCoding.router.on('route:system_info', function() {
+        window.COC.router.on('route:system_info', function() {
             $('a[href="#system_info"]').tab('show');
         });
-        CodeOfCoding.router.on('route:story', function() {
+        window.COC.router.on('route:story', function() {
             $('a[href="#story"]').tab('show');
         });
     },
