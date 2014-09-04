@@ -17,15 +17,17 @@ Getting Set Up:
 
 Using Grunt to Pre-compile Handlebars Templates:
 ------------------------------------------------
-+ Run Grunt
-    grunt
-+ Run Grunt, but watch for changes to filesystem, and re-run on-demand
-    grunt watch
-+ When installing a new grunt plugin (node package):
-    npm install <package> --save-dev
+Run grunt from web/src (the directory containing gruntfile.js)
++ Run Grunt ` grunt `
++ Run Grunt, but watch for changes to filesystem, and re-run on-demand ` grunt watch `
++ When installing a new grunt plugin (node package): ` npm install <package> --save-dev `
+
   > This will update package.json with the new dependency
 
-Note: List of current Grunt tasks:
+
+List of current Grunt tasks:
+
+
 + Pre-compile handlebar templates in web/src/handlebars/ into web/js/handlebars_templates.js
 
 Intellij Setup and Plugins:
