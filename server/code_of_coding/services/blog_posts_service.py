@@ -2,7 +2,7 @@
 Blog Posts Service
 
 """
-import pymongo
+#import pymongo
 
 class BlogPostsService():
 

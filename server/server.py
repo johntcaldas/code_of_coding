@@ -4,6 +4,7 @@ The main execution entry-point for the webapp/services.
 
 # Import system stuff
 from flask import make_response
+import logging
 
 # Import our stuff
 from code_of_coding import app
@@ -27,4 +28,14 @@ def after_request_callback(response):
     return response
 
 if __name__ == "__main__":
+    # Load the application configuration from file.
+    app.config.from_pyfile("server.cfg", silent=True)
+
+    # Configure logging
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler = logging.FileHandler(filename=app.config['SERVER_LOG_FILE'])
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.DEBUG)
+    app.logger.addHandler(file_handler)
+
     app.run(debug=True)

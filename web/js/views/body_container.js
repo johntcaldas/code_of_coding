@@ -6,6 +6,7 @@ var BodyContainer = Backbone.View.extend({
     initialize: function() {
         this.render();
 
+
         window.COC.router.on('route:home', function() {
             // Calling show on the <a> of a nav tells bootstrap
             $('a[href="#home"]').tab('show');
