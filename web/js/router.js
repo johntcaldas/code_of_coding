@@ -4,13 +4,16 @@ var Router = Backbone.Router.extend({
 
     routes: {
         "home": "home",                // #home
-        "system_info": "system_info",  // #system_info
+        "post_blog": "post_blog",      // #post_blog
         "story": "story"               // #story
     }
 });
 
 // Load the router
 (function() {
+    var log = window.COC.log;
+    log.debug("router.js Initializing router.")
+
     window.COC.router = new Router();
     Backbone.history.start();
 

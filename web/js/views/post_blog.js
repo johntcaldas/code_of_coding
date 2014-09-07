@@ -5,6 +5,7 @@ window.COC.views.SystemInfo = Backbone.View.extend({
     },
 
     render: function() {
+        CKEDITOR.replace( 'post_blog_editor' );
         return;
     }
 });

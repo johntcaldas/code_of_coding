@@ -11,8 +11,8 @@ var BodyContainer = Backbone.View.extend({
             // Calling show on the <a> of a nav tells bootstrap
             $('a[href="#home"]').tab('show');
         });
-        window.COC.router.on('route:system_info', function() {
-            $('a[href="#system_info"]').tab('show');
+        window.COC.router.on('route:post_blog', function() {
+            $('a[href="#post_blog"]').tab('show');
         });
         window.COC.router.on('route:story', function() {
             $('a[href="#story"]').tab('show');
