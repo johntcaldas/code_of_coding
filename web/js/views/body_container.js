@@ -8,7 +8,9 @@ var BodyContainer = Backbone.View.extend({
 
 
         window.COC.router.on('route:home', function() {
-            // Calling show on the <a> of a nav tells bootstrap
+            window.COC.views.PostBlog.initialize()
+
+            // Calling show on the <a> of a nav tells bootstrap TODO
             $('a[href="#home"]').tab('show');
         });
         window.COC.router.on('route:post_blog', function() {

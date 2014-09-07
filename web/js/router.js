@@ -11,8 +11,8 @@ var Router = Backbone.Router.extend({
 
 // Load the router
 (function() {
-    var log = window.COC.log;
-    log.debug("router.js Initializing router.")
+    //var log = window.COC.log;
+    //log.debug("router.js Initializing router.")
 
     window.COC.router = new Router();
     Backbone.history.start();
