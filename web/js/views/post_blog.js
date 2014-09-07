@@ -5,7 +5,6 @@ window.COC.views.PostBlog = Backbone.View.extend({
     },
 
     render: function() {
-        debugger;
-        CKEDITOR.replace( 'post_blog_editor' );
+        CKEDITOR.replace( 'post_blog_editor');
     }
 });
