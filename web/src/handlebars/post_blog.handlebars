@@ -1,9 +1,26 @@
-<div id="post_blog">
+<div id="post_blog" class="container-fluid">
 
-    <h1>Post Blog Entry</h1>
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Post Blog Entry</h1>
+        </div>
+        <div class="col-md-2t">
+            <button type="button"
+                    id="post_blog_btn"
+                    data-loading-text="Posting ..."
+                    class="btn btn-primary"
+                    style="height: 100%;">
+                Post
+            </button>
+        </div>
+    </div>
 
-    <textarea name="post_blog_editor" id="post_blog_editor" rows="100" cols="100">
-        This is my textarea to be replaced with CKEditor.
-    </textarea>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea name="post_blog_editor" id="post_blog_editor">
+                Time to write, dude.
+            </textarea>
+        </div>
+    </div>
 
 </div>
