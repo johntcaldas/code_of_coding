@@ -18,6 +18,7 @@ class BlogPostsService():
         posts_list = posts_cursor[:]
         return posts_list
 
+
     def add_post(self, html, tags, author, date=datetime.datetime.utcnow()):
         post = {
             "html": html,

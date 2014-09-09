@@ -3,7 +3,7 @@
 /* Contains the topest level navigation elements (eg. home, systeminfo, about, contact etc) */
 var BodyContainer = Backbone.View.extend({
 
-    home_view: undefined,
+    log_tag: "body_container_view",
 
     initialize: function() {
         this.render();
@@ -14,13 +14,14 @@ var BodyContainer = Backbone.View.extend({
             $('a[href="#home"]').tab('show');
         });
 
-        window.COC.router.on('route:post_blog', function() {
-            if (this.home_view === undefined) {
-                this.home_view = new window.COC.views.PostBlog();
+        window.COC.router.on('route:post', function() {
+            if (window.COC.views.post_view === undefined) {
+                window.COC.log.info(this.log_tag + " Loading post view ...");
+                window.COC.views.post_view = new window.COC.views.PostBlog({el: $('#post')});
             }
 
-            $('a[href="#post_blog"]').tab('show');
-        });
+            $('a[href="#post"]').tab('show');
+        }.bind( this ));
 
         window.COC.router.on('route:story', function() {
             $('a[href="#story"]').tab('show');

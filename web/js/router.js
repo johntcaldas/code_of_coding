@@ -4,7 +4,7 @@ var Router = Backbone.Router.extend({
 
     routes: {
         "home": "home",                // #home
-        "post_blog": "post_blog",      // #post_blog
+        "post": "post",                // #post
         "story": "story"               // #story
     }
 });
@@ -33,7 +33,7 @@ var Router = Backbone.Router.extend({
         if (router.routes.hasOwnProperty(route)) {
             if (url.indexOf(router.routes[route]) > -1) {
                 //router.routes[route]
-                router.navigate("post_blog", {trigger: true, replace: true});
+                router.navigate("post", {trigger: true, replace: true});
             }
         }
     }

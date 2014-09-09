@@ -8,10 +8,15 @@
         router: {},
         views: {},
         models: {},
+        util: {},
         serverUrlRoot: 'http://127.0.0.1:5000'
-    }
+    };
 
 
+    //************************************************
+    // Log to server                                 *
+    // TODO: factor this out                         *
+    //************************************************
     // Create custom JSON Appender
     function JsonAppender(url) {
         var isSupported = true;
