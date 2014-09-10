@@ -1,17 +1,8 @@
 <div id="post" class="container-fluid">
 
     <div class="row">
-        <div class="col-md-10">
-            <h1>Post Blog Entry</h1>
-        </div>
-        <div class="col-md-2t">
-            <button type="button"
-                    id="post_btn"
-                    data-loading-text="Posting ..."
-                    class="btn btn-primary"
-                    style="height: 100%;">
-                Post
-            </button>
+        <div class=".col-md-12">
+            <h1 class="text-center">Post Blog Entry</h1>
         </div>
     </div>
 
@@ -23,4 +14,28 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form role="form">
+                <div class="form-group">
+                    <label for="title_txt">Title</label>
+                    <input id="title_txt" type="text" class="form-control" placeholder="title">
+                </div>
+                <div class="form-group">
+                    <label for="tags_txt">Tags</label>
+                    <input id="tags_txt" type="text" class="form-control" placeholder="tags">
+                </div>
+                <div class="form-group">
+                    <label for="post_date_picker">Post Date</label>
+                    <div id="post_date_picker"></div>
+                </div>
+                <button type="submit"
+                        id="post_btn"
+                        data-loading-text="Posting ..."
+                        class="btn btn-primary">
+                    Post
+                </button>
+            </form>
+        </div>
+    </div>
 </div>

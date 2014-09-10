@@ -14,11 +14,12 @@ def get_posts():
 @app.route("/posts/", methods=['POST'])
 def add_post():
     post_data = request.form
+    title = post_data['title']
     html = post_data['html']
     tags = post_data['tags']
-    author = post_data['author']
+    date = post_data['date']
     blog_posts_service = BlogPostsService()
-    post_id = blog_posts_service.add_post(html, tags, author)
+    post_id = blog_posts_service.add_post(title, html, tags, date)
     return jsonify({"post_id": post_id})
 
 @app.route("/log_client_message/", methods=['POST'])
