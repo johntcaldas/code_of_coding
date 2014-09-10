@@ -21,7 +21,8 @@ window.COC.views.PostBlog = Backbone.View.extend({
 
     post_to_server: function () {
         var url = window.COC.serverUrlRoot + "/posts/";
-        var post_html = CKEDITOR.getData();
+        var post_html = CKEDITOR.instances.post_editor.getData();
+
         var data = {
             "html": post_html,
             "tags": "hello,world,of,tags",
