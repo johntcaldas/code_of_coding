@@ -41,7 +41,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
             "date": date
         };
 
-        jQuery.post(url, data, this.post_to_server_success, "json");
+        $.post(url, data, this.post_to_server_success, "json");
     },
 
     post_to_server_success: function (data) {

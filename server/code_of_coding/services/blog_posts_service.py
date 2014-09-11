@@ -15,7 +15,8 @@ class BlogPostsService():
 
     def get_posts(self):
         posts_cursor = self.posts.find()
-        posts_list = posts_cursor[:]
+
+        posts_list = list(posts_cursor)
         return posts_list
 
     def add_post(self, title, html, tags, date=datetime.datetime.utcnow()):

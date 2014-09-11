@@ -11,11 +11,11 @@ var Router = Backbone.Router.extend({
 
 // Load the router
 (function() {
-    //var log = window.COC.log;
+    //var log = COC.log;
     //log.debug("router.js Initializing router.")
 
     var router = new Router();
-    window.COC.router = router;
+    COC.router = router;
     Backbone.history.start();
 
     // Load up the mother of all views.

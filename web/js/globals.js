@@ -48,9 +48,9 @@
     log4javascript.JsonAppender = JsonAppender;
 
     // Set up logger
-    window.COC.log = log4javascript.getLogger();
-    var jsonAppender = new JsonAppender(window.COC.serverUrlRoot + "/log_client_message/");
-    window.COC.log.addAppender(jsonAppender);
-    window.COC.log.debug("globals.js: Loaded logger.");
+    COC.log = log4javascript.getLogger();
+    var jsonAppender = new JsonAppender(COC.serverUrlRoot + "/log_client_message/");
+    COC.log.addAppender(jsonAppender);
+    COC.log.debug("globals.js: Loaded logger.");
 
 })();

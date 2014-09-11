@@ -1,15 +1,20 @@
-from flask import jsonify, request
+from flask import request
 
 from code_of_coding import app
 from code_of_coding.services.blog_posts_service import BlogPostsService
 from code_of_coding.services import client_logger
+from interface_utils import jsonify
 
 @app.route("/posts/", methods=['GET'])
 def get_posts():
 
     blog_posts_service = BlogPostsService()
     posts = blog_posts_service.get_posts()
-    return jsonify(posts)
+    ret = {
+        "success": "true",
+        "posts": posts
+    }
+    return jsonify(ret)
 
 @app.route("/posts/", methods=['POST'])
 def add_post():

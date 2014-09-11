@@ -9,23 +9,28 @@ var BodyContainer = Backbone.View.extend({
         this.render();
 
 
-        window.COC.router.on('route:home', function() {
+        COC.router.on('route:home', function() {
             // Calling show on the <a> of a nav tells bootstrap TODO
             $('a[href="#home"]').tab('show');
         });
 
-        window.COC.router.on('route:post', function() {
-            if (window.COC.views.post_view === undefined) {
-                window.COC.log.info(this.log_tag + " Loading post view ...");
-                window.COC.views.post_view = new window.COC.views.PostBlog({el: $('#post')});
+        COC.router.on('route:post', function() {
+            if (COC.views.post_view === undefined) {
+                COC.log.info(this.log_tag + " Loading post view ...");
+                COC.views.post_view = new COC.views.PostBlog({el: $('#post')});
             }
 
             $('a[href="#post"]').tab('show');
         }.bind( this ));
 
-        window.COC.router.on('route:story', function() {
+        COC.router.on('route:story', function() {
+            if (COC.views.story_view === undefined) {
+                COC.log.info(this.log_tag + " Loading story view ...");
+                COC.views.story_view = new COC.views.Story({el: $('#story')});
+            }
+
             $('a[href="#story"]').tab('show');
-        });
+        }.bind( this ));
     },
 
     render: function() {
