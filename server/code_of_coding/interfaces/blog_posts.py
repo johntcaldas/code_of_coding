@@ -25,7 +25,11 @@ def add_post():
     date = post_data['date']
     blog_posts_service = BlogPostsService()
     post_id = blog_posts_service.add_post(title, html, tags, date)
-    return jsonify({"post_id": post_id})
+    ret = {
+        "success": "true",
+        "post_id": post_id
+    }
+    return jsonify(ret)
 
 @app.route("/log_client_message/", methods=['POST'])
 def log_client_message():
