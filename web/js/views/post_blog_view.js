@@ -41,6 +41,12 @@ window.COC.views.PostBlog = Backbone.View.extend({
             alert_div.addClass('show');
             alert_div.addClass('alert-danger');
             alert_div.removeClass('hidden');
+            setTimeout(function() {
+                alert_div.fadeTo(500, 0).slideUp(500, function(){
+                    alert_div.removeClass('show');
+                    alert_div.addClass('hidden');
+                });
+            }, 5000);
             return;
         }
 
@@ -50,6 +56,12 @@ window.COC.views.PostBlog = Backbone.View.extend({
             alert_div.addClass('show');
             alert_div.addClass('alert-danger');
             alert_div.removeClass('hidden');
+            setTimeout(function() {
+                alert_div.fadeTo(500, 0).slideUp(500, function(){
+                    alert_div.removeClass('show');
+                    alert_div.addClass('hidden');
+                });
+            }, 5000);
             return;
         }
 
@@ -59,12 +71,18 @@ window.COC.views.PostBlog = Backbone.View.extend({
             alert_div.addClass('show');
             alert_div.addClass('alert-danger');
             alert_div.removeClass('hidden');
+            setTimeout(function() {
+                alert_div.fadeTo(500, 0).slideUp(500, function(){
+                    alert_div.removeClass('show');
+                    alert_div.addClass('hidden');
+                });
+            }, 5000);
             return;
         }
 
         var title = $('#title_txt').val();
         var tags = $('#tags_txt').val();
-        var date_picker_div = $('#post_date_picker');
+        //var date_picker_div = $('#post_date_picker');
         ///var date = date_picker_div.datepicker('getDate');
         var date = new Date();
         var isoDateStr = date.toISOString();
@@ -75,11 +93,23 @@ window.COC.views.PostBlog = Backbone.View.extend({
             "date": isoDateStr
         };
 
+        // Set button to loading text
+        var post_btn = $('#post_btn');
+        post_btn.button('loading');
+
+        // Post to server
         var url = window.COC.serverUrlRoot + "/posts/";
         $.post(url, data, this.post_to_server_success, "json");
     },
 
     post_to_server_success: function (data) {
+
+        // Reset button text
+        var post_btn = $('#post_btn');
+        setTimeout(function () {
+            post_btn.button('reset');
+        }, 300);
+
 
         var alert_div = $('#post_blog_alert');
 
@@ -96,6 +126,13 @@ window.COC.views.PostBlog = Backbone.View.extend({
         alert_div.addClass('alert-success');
         alert_div.removeClass('alert-danger');
         alert_div.removeClass('hidden');
+
+        setTimeout(function() {
+            alert_div.fadeTo(500, 0).slideUp(500, function(){
+                alert_div.removeClass('show');
+                alert_div.addClass('hidden');
+            });
+        }, 5000);
 
         CKEDITOR.instances.post_editor.setData('Feel like writing something else?');
         $('#tags_txt').val('');
