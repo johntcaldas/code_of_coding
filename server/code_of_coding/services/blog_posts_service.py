@@ -2,6 +2,7 @@
 Blog Posts Service
 
 """
+import pymongo
 from pymongo import MongoClient
 import datetime
 
@@ -14,8 +15,7 @@ class BlogPostsService():
         self.posts = db.posts
 
     def get_posts(self):
-        posts_cursor = self.posts.find()
-
+        posts_cursor = self.posts.find().sort("date", pymongo.DESCENDING)
         posts_list = list(posts_cursor)
         return posts_list
 

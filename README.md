@@ -22,6 +22,12 @@ Getting Set Up:
 + Install MongoDB
     - `sudo apt-get install mongodb`
     - `sudo pip install pymongo`
+    
++ Install Flask
+    - Coming Soon ...
+    
++ Python Dependencies (requirements.txt coming soon ...)
+    - dateutil
 
 
 Using Grunt to Pre-compile Handlebars Templates:

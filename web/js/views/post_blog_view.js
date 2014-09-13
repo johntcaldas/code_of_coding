@@ -19,6 +19,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
 
         CKEDITOR.replace('post_editor');
 
+
         var date_picker_div = $('#post_date_picker');
         date_picker_div.datepicker({
             todayHighlight: true,
@@ -61,15 +62,17 @@ window.COC.views.PostBlog = Backbone.View.extend({
             return;
         }
 
-
+        var title = $('#title_txt').val();
+        var tags = $('#tags_txt').val();
         var date_picker_div = $('#post_date_picker');
-        var date = date_picker_div.datepicker('getDate');
-
+        ///var date = date_picker_div.datepicker('getDate');
+        var date = new Date();
+        var isoDateStr = date.toISOString();
         var data = {
-            "title": "Hello World!",
+            "title": title,
             "html": post_html,
-            "tags": "hello,world,of,tags",
-            "date": date
+            "tags": tags,
+            "date": isoDateStr
         };
 
         var url = window.COC.serverUrlRoot + "/posts/";
