@@ -24,15 +24,21 @@ window.COC.views.Story = Backbone.View.extend({
         }
 
         var posts = data.posts;
+
         var post_template = templates['handlebars/story_post.handlebars'];
         var post_attach_point_div = $('#story_posts_attach_point');
 
         for(var i = 0; i < posts.length; i++) {
             var post = posts[i];
+
+            // Format the date.
+            var momentDate = moment(post.date, moment.ISO_8601);
+            var stringDate = momentDate.format("dddd, MMMM Do YYYY");
+
             var context = {
                 "title": post.title,
                 "html": post.html,
-                "date": post.date.toString()
+                "date": stringDate
             }
             var html = post_template(context);
             post_attach_point_div.append(html);
