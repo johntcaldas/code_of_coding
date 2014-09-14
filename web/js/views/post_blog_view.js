@@ -2,9 +2,18 @@
 
 window.COC.views.PostBlog = Backbone.View.extend({
 
-
+    // Backbone's dictionary of events.
     events: {
         "click #post_btn": "post_btn_click"
+    },
+
+    // Our list of elements.
+    elements: {
+       date_picker_div: null,
+       alert_div: null,
+       title_txt: null,
+       tags_txt: null,
+       post_btn: null
     },
 
     initialize: function () {
@@ -13,75 +22,53 @@ window.COC.views.PostBlog = Backbone.View.extend({
 
     render: function () {
 
+        // Render tamplate html and place on page.
         var template = templates['handlebars/post_blog.handlebars'];
         var html = template();
         this.$el.html(html);
 
+        // Grab references to the elements we're going to be manipulating.
+        this.elements.date_picker_div = $('#post_date_picker');
+        this.elements.alert_div = $('#post_blog_alert');
+        this.elements.title_txt = $('#title_txt');
+        this.elements.tags_txt = $('#tags_txt');
+        this.elements.post_btn = $('#post_btn');
+
+        // Initialize CKEditor.
         CKEDITOR.replace('post_editor');
 
-
-        var date_picker_div = $('#post_date_picker');
-        date_picker_div.datepicker({
+        // Initialize the date picker.
+        var date_picker = this.elements.date_picker_div;
+        date_picker.datepicker({
             todayHighlight: true,
             todayBtn: true
         });
 
-        date_picker_div.datepicker('setValue', new Date());
-        date_picker_div.datepicker('update', new Date());
+        date_picker.datepicker('setValue', new Date());
+        date_picker.datepicker('update', new Date());
     },
 
     post_btn_click: function () {
 
         // Validate input
-        var alert_div = $('#post_blog_alert');
-
         var post_html = CKEDITOR.instances.post_editor.getData();
         if(!post_html || post_html == null || post_html == "") {
-            alert_div.html('Write a post first!');
-            alert_div.addClass('show');
-            alert_div.addClass('alert-danger');
-            alert_div.removeClass('hidden');
-            setTimeout(function() {
-                alert_div.fadeTo(500, 0).slideUp(500, function(){
-                    alert_div.removeClass('show');
-                    alert_div.addClass('hidden');
-                });
-            }, 5000);
+            this.show_alert('Write a post first!', 'alert-danger');
             return;
         }
 
-        var title = $('#title_txt').val();
+        var title = this.elements.title_txt.val();
         if(!title || title == null || title == "") {
-            alert_div.html('You might want to give that post a title!');
-            alert_div.addClass('show');
-            alert_div.addClass('alert-danger');
-            alert_div.removeClass('hidden');
-            setTimeout(function() {
-                alert_div.fadeTo(500, 0).slideUp(500, function(){
-                    alert_div.removeClass('show');
-                    alert_div.addClass('hidden');
-                });
-            }, 5000);
+            this.show_alert('You might want to give that post a title!', 'alert-danger');
             return;
         }
 
-        var tags = $('#tags_txt').val();
+        var tags = this.elements.tags_txt.val();
         if(!tags || tags == null || tags == "") {
-            alert_div.html('You might want to come up with some tags!');
-            alert_div.addClass('show');
-            alert_div.addClass('alert-danger');
-            alert_div.removeClass('hidden');
-            setTimeout(function() {
-                alert_div.fadeTo(500, 0).slideUp(500, function(){
-                    alert_div.removeClass('show');
-                    alert_div.addClass('hidden');
-                });
-            }, 5000);
+            this.show_alert('You might want to come up with some tags!', 'alert-danger');
             return;
         }
 
-        var title = $('#title_txt').val();
-        var tags = $('#tags_txt').val();
         //var date_picker_div = $('#post_date_picker');
         ///var date = date_picker_div.datepicker('getDate');
         var date = new Date();
@@ -94,8 +81,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
         };
 
         // Set button to loading text
-        var post_btn = $('#post_btn');
-        post_btn.button('loading');
+        this.elements.post_btn.button('loading');
 
         // Post to server
         var url = window.COC.serverUrlRoot + "/posts/";
@@ -105,38 +91,42 @@ window.COC.views.PostBlog = Backbone.View.extend({
     post_to_server_success: function (data) {
 
         // Reset button text
-        var post_btn = $('#post_btn');
         setTimeout(function () {
-            post_btn.button('reset');
+            this.elements.post_btn.button('reset');
         }, 300);
 
 
-        var alert_div = $('#post_blog_alert');
-
         if(!data.success) {
-            alert_div.html('Error submitting to server!');
-            alert_div.addClass('show');
-            alert_div.addClass('alert-danger');
-            alert_div.removeClass('hidden');
+            this.show_alert('Error submitting to server!', 'alert-danger');
             return;
         }
 
-        alert_div.html('Post submitted!');
+        this.show_alert('Post submitted!', 'alert-success');
+
+        CKEDITOR.instances.post_editor.setData('Feel like writing something else?');
+        this.elements.tags_txt.val('');
+        this.elements.title_txt.val('');
+
+    },
+
+    show_alert: function(text, bootstrap_class) {
+        var alert_div = this.elements.alert_div;
+
+        alert_div.html(text);
+        alert_div.addClass(bootstrap_class);
         alert_div.addClass('show');
-        alert_div.addClass('alert-success');
-        alert_div.removeClass('alert-danger');
         alert_div.removeClass('hidden');
 
+        // Set alert to fade out.
         setTimeout(function() {
             alert_div.fadeTo(500, 0).slideUp(500, function(){
                 alert_div.removeClass('show');
                 alert_div.addClass('hidden');
+
+                // Remove potentially used bootstrap classes
+                alert_div.removeClass('alert-danger');
+                alert_div.removeClass('alert-success');
             });
         }, 5000);
-
-        CKEDITOR.instances.post_editor.setData('Feel like writing something else?');
-        $('#tags_txt').val('');
-        $('#title_txt').val('');
-
     }
 });
