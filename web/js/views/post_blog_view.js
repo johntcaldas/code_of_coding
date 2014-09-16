@@ -1,3 +1,5 @@
+"use strict";
+
 // TODO: I somehow forgot camel casing in this file ...
 
 window.COC.views.PostBlog = Backbone.View.extend({
@@ -7,7 +9,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
         "click #post_btn": "post_btn_click"
     },
 
-    // Our list of elements.
+    // The list of elements we'll be manipulating from this view.
     elements: {
        date_picker_div: null,
        alert_div: null,
