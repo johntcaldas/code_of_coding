@@ -3,8 +3,7 @@ Blog Posts Service
 
 """
 import pymongo
-from pymongo import MongoClient
-import datetime
+from datetime import datetime
 
 from code_of_coding.data import database
 
@@ -20,7 +19,7 @@ class BlogPostsService():
         posts_list = list(posts_cursor)
         return posts_list
 
-    def add_post(self, title, html, tags, date=datetime.datetime.utcnow()):
+    def add_post(self, title, html, tags, date=datetime.utcnow()):
         post = {
             "title": title,
             "html": html,

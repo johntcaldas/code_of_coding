@@ -5,7 +5,8 @@ from code_of_coding import app
 from code_of_coding.services.blog_posts_service import BlogPostsService
 from code_of_coding.services import client_logging_service
 from code_of_coding.services import authentication_service
-from interface_utils import jsonify
+from jsonify import jsonify
+from interface_utils import auth
 
 
 @app.route("/authenticate/", methods=['POST'])
@@ -13,6 +14,15 @@ def authenticate():
     post_data = request.form
     username = post_data['username']
     password = post_data['password']
+    session_token = authentication_service.authenticate(username, password)
+
+    ret = {
+        "success": True,
+        "token": session_token
+    }
+
+    return jsonify(ret)
+
 
 @app.route("/posts/", methods=['GET'])
 def get_posts():
@@ -21,7 +31,7 @@ def get_posts():
     posts = blog_posts_service.get_posts()
 
     ret = {
-        "success": "true",
+        "success": True,
         "posts": posts
     }
 
@@ -29,6 +39,7 @@ def get_posts():
 
 
 @app.route("/posts/", methods=['POST'])
+@auth
 def add_post():
     post_data = request.form
     title = post_data['title']
@@ -41,7 +52,7 @@ def add_post():
     post_id = blog_posts_service.add_post(title, html, tags, date_object)
 
     ret = {
-        "success": "true",
+        "success": True,
         "post_id": post_id
     }
 
@@ -59,4 +70,4 @@ def log_client_message():
 
     client_logging_service.log(message, level, url)
 
-    return jsonify({"success": "true"})
+    return jsonify({"success": True})

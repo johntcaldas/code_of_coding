@@ -1,28 +1,14 @@
-# The jsonify defined here is like flask's jsonify, except that it knows how to handle mongodb objectIds
-# Source taken from: https://gist.github.com/akhenakh/2954605
+from functools import wraps
+from flask import request, Response
 
-try:
-    import simplejson as json
-except ImportError:
-    try:
-        import json
-    except ImportError:
-        raise ImportError
-import datetime
-from bson.objectid import ObjectId
-from werkzeug import Response
+from code_of_coding.services import authentication_service
 
 
-class MongoJsonEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, (datetime.datetime, datetime.date)):
-            return obj.isoformat()
-        elif isinstance(obj, ObjectId):
-            return unicode(obj)
-        return json.JSONEncoder.default(self, obj)
-
-
-def jsonify(*args, **kwargs):
-    """ jsonify with support for MongoDB ObjectId
-    """
-    return Response(json.dumps(dict(*args, **kwargs), cls=MongoJsonEncoder), mimetype='application/json')
+def auth(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        token = request.headers.get('X-AuthToken')
+        if not authentication_service.validate_session(token):
+            return Response('Authentication required.', 401, {'WWWAuthenticate': 'Basic realm="Login Required"'})
+        return f(*args, **kwargs)
+    return wrapper
