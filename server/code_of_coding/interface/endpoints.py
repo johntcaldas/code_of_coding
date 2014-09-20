@@ -3,9 +3,16 @@ import dateutil.parser
 
 from code_of_coding import app
 from code_of_coding.services.blog_posts_service import BlogPostsService
-from code_of_coding.services import client_logger
+from code_of_coding.services import client_logging_service
+from code_of_coding.services import authentication_service
 from interface_utils import jsonify
 
+
+@app.route("/authenticate/", methods=['POST'])
+def authenticate():
+    post_data = request.form
+    username = post_data['username']
+    password = post_data['password']
 
 @app.route("/posts/", methods=['GET'])
 def get_posts():
@@ -50,6 +57,6 @@ def log_client_message():
     level = log_message['level']
     url = log_message['url']
 
-    client_logger.log(message, level, url)
+    client_logging_service.log(message, level, url)
 
     return jsonify({"success": "true"})

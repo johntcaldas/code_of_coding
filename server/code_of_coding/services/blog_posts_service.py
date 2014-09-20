@@ -6,12 +6,13 @@ import pymongo
 from pymongo import MongoClient
 import datetime
 
+from code_of_coding.data import database
+
 
 class BlogPostsService():
 
     def __init__(self):
-        db_client = MongoClient('localhost', 27017)
-        db = db_client.code_of_coding
+        db = database.get_db()
         self.posts = db.posts
 
     def get_posts(self):

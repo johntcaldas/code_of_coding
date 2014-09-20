@@ -4,6 +4,7 @@ The main execution entry-point for the webapp/services.
 
 # Import system stuff
 from flask import make_response
+from pymongo import MongoClient
 import logging
 
 # Import our stuff
