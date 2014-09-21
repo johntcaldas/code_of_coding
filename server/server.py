@@ -26,6 +26,7 @@ def teardown_request(exception):
 def after_request_callback(response):
     response = make_response(response)
     response.headers['Access-Control-Allow-Origin'] = "*"
+    response.headers['Access-Control-Allow-Headers'] = "X-AuthToken"
     return response
 
 if __name__ == "__main__":

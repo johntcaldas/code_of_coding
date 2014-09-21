@@ -18,7 +18,7 @@ var BodyContainer = Backbone.View.extend({
             }
 
             COC.views.login_view.show_modal();
-        });
+        }.bind(this));
 
         COC.router.on('route:home', function () {
             // Calling show on the <a> of a nav tells bootstrap TODO

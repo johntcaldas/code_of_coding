@@ -15,7 +15,8 @@ window.COC.views.Login = Backbone.View.extend({
         username_txt: null,
         password_txt: null,
         login_btn: null,
-        alert_div: null
+        alert_div: null,
+        post_blog_nav_li: null
     },
 
     initialize: function () {
@@ -34,6 +35,7 @@ window.COC.views.Login = Backbone.View.extend({
         this.elements.password_txt = $('#password_txt');
         this.elements.login_btn = $('#login_btn');
         this.elements.alert_div = $('#login_alert_div');
+        this.elements.post_blog_nav_li = $('#post_blog_nav_li');
     },
 
     show_modal: function () {
@@ -83,12 +85,13 @@ window.COC.views.Login = Backbone.View.extend({
 
         if (!token || token == null || token.length < 5) {
             COC.log.error(this.log_tag + " Did not get a good token back from the server.");
-            this.show_alert("Did not get a good token back from the server.");
+            this.show_alert("Username or password incorrect.");
             return;
         }
 
         COC.sessionToken = token;
         this.elements.login_modal.modal('hide');
+        this.elements.post_blog_nav_li.removeClass('hidden');
     },
 
     show_alert: function(text) {

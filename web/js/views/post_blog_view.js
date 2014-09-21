@@ -87,7 +87,17 @@ window.COC.views.PostBlog = Backbone.View.extend({
 
         // Post to server
         var url = COC.serverUrlRoot + "/posts/";
-        $.post(url, data, this.post_to_server_success.bind(this), "json");
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: data,
+            headers: {
+              "X-AuthToken": COC.sessionToken
+            },
+            dataType: 'json',
+            success: this.post_to_server_success.bind(this)
+        });
     },
 
     post_to_server_success: function (data) {
