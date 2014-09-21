@@ -9,14 +9,20 @@ from code_of_coding import app
 
 
 def authenticate(username, password):
-    hashed_password = _hash_password(password)
 
+    # Get user.
     db = database.get_db()
     users = db.users
-    user = users.find_one({"username": username, "password": hashed_password})
+    user = users.find_one({"username": username})
 
     if user is None:
         return None
+
+    # Check password
+    hashed_password = user['password']
+    if not _check_password(hashed_password, password):
+        return None
+
 
     # Remove any existing sessions
     user['session'] = None
@@ -27,7 +33,7 @@ def authenticate(username, password):
     expires = now + timedelta(minutes=session_minutes)
 
     session = {
-        "token": uuid.uuid4(),
+        "token": uuid.uuid4().hex,
         "expires": expires
     }
 

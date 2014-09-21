@@ -9,7 +9,8 @@
         views: {},
         models: {},
         util: {},
-        serverUrlRoot: 'http://127.0.0.1:5000'
+        serverUrlRoot: 'http://127.0.0.1:5000',
+        sessionToken: null
     };
 
 

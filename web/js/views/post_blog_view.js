@@ -86,7 +86,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
         this.elements.post_btn.button('loading');
 
         // Post to server
-        var url = window.COC.serverUrlRoot + "/posts/";
+        var url = COC.serverUrlRoot + "/posts/";
         $.post(url, data, this.post_to_server_success.bind(this), "json");
     },
 
