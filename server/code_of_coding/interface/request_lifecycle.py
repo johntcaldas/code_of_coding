@@ -4,7 +4,6 @@ from code_of_coding import app
 
 @app.before_request
 def before_request_callback():
-    app.logger.info("Before request!!!")
     pass
 
 

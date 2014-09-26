@@ -9,13 +9,6 @@ from jsonify import jsonify
 from interface_utils import auth
 
 
-@app.route("/")
-def hello():
-        app.logger.error("!!!!!!")
-        app.logger.error("Hello World Log!")
-        return "Hello Word!"
-
-
 @app.route("/authenticate/", methods=['POST'])
 def authenticate():
     post_data = request.form
