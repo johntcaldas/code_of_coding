@@ -11,8 +11,6 @@ window.COC.views.Alert = Backbone.View.extend({
     render: function () {
 
         // Render template html and place on page.
-        //var html = '<div class="alert alert-danger hidden" role="alert"></div>';
-        //this.$el.html(html);
         var alert_div = this.$el;
         alert_div.addClass('alert hidden');
         alert_div.attr('role', 'alert');

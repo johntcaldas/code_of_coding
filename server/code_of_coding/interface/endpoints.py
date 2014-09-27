@@ -11,7 +11,7 @@ from interface_utils import auth
 
 @app.route("/authenticate/", methods=['POST'])
 def authenticate():
-    post_data = request.form
+    post_data = request.get_json()
     username = post_data['username']
     password = post_data['password']
     session = authentication_service.authenticate(username, password)
@@ -62,7 +62,7 @@ def add_post():
 @app.route("/log_client_message/", methods=['POST'])
 def log_client_message():
 
-    log_message = request.form
+    log_message = request.get_json()
 
     message = log_message['message']
     level = log_message['level']

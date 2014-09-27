@@ -56,16 +56,27 @@ window.COC.views.Login = Backbone.View.extend({
             return;
         }
 
-        var data = {
+        var data = JSON.stringify({
             "username": username,
             "password": password
-        };
+        });
 
         // Set button to loading text
         this.elements.login_btn.button('loading');
 
         var url = COC.server_url_root + "/authenticate/";
-        $.post(url, data, this.handle_login_response.bind(this), "json");
+
+        $.ajax({
+            contentType: 'application/json',
+            url: url,
+            data: data,
+            type: "POST",
+            dataType: "json",
+            success: this.handle_login_response.bind( this ),
+            error: function() {
+                alert('error logging')
+            }
+        });
     },
 
     handle_login_response: function(data, textStatus, jqXHR) {

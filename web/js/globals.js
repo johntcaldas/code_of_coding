@@ -16,34 +16,48 @@
 
     //************************************************
     // Log to server                                 *
-    // TODO: factor this out                         *
     //************************************************
     // Create custom JSON Appender
     function json_appender(url) {
         var is_supported = true;
-        var success_callback = function(data, textStatus, jqXHR) { return; };
+        var success_callback = function (data, textStatus, jqXHR) {
+            return;
+        };
         if (!url) {
             is_supported = false;
         }
-        this.set_success_callback = function(success_callback) {
+        this.set_success_callback = function (success_callback) {
             success_callback = success_callback;
         };
         this.append = function (logging_event) {
             if (!is_supported) {
                 return;
             }
-            $.post(url, {
+
+            var data = JSON.stringify({
                 'logger': logging_event.logger.name,
                 'timestamp': logging_event.timeStampInMilliseconds,
                 'level': logging_event.level.name,
                 'url': window.location.href,
                 'message': logging_event.getCombinedMessages(),
                 'exception': logging_event.getThrowableStrRep()
-            }, success_callback, 'json');
+            });
+            $.ajax({
+                contentType: 'application/json',
+                url: url,
+                data: data,
+                type: "POST",
+                dataType: "json",
+                success: success_callback,
+                error: function() {
+                    alert('error logging')
+                }
+            });
         };
     }
+
     json_appender.prototype = new log4javascript.Appender();
-    json_appender.prototype.toString = function() {
+    json_appender.prototype.toString = function () {
         return 'json_appender';
     };
     log4javascript.json_appender = json_appender;
