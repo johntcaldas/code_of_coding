@@ -41,8 +41,8 @@ def authenticate(username, password):
     user['session'] = session
     users.update({"_id": user['_id']}, user)
 
-    # Return token
-    return session['token']
+    # Return token and expire date.
+    return session
 
 
 def validate_session(token):

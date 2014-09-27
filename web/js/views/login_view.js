@@ -82,13 +82,18 @@ window.COC.views.Login = Backbone.View.extend({
         }
 
         var token = data.token;
-
         if (!token || token == null || token.length < 5) {
             COC.log.error(this.log_tag + " Did not get a good token back from the server.");
             this.show_alert("Username or password incorrect.");
             return;
         }
 
+        // Set cookie with the session token. It will expire at the same time the token expires on the server, using
+        // the 'expires' we get from the server. Note: not sure what timezone implications are here.
+        var expires_iso8601_string = data.expires;
+        $.cookie('session_token', token, { expires: new Date(expires_iso8601_string) });
+
+        // "Log in". Note: Some code duped in main.js. Could common "login" functionality that doesn't live in a view.
         COC.session_token = token;
         this.elements.login_modal.modal('hide');
         this.elements.post_blog_nav_li.removeClass('hidden');

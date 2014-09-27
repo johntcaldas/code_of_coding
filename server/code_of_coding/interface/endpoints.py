@@ -14,11 +14,12 @@ def authenticate():
     post_data = request.form
     username = post_data['username']
     password = post_data['password']
-    session_token = authentication_service.authenticate(username, password)
+    session = authentication_service.authenticate(username, password)
 
     ret = {
         "success": True,
-        "token": session_token
+        "token": session['token'],
+        "expires": session['expires']
     }
 
     return jsonify(ret)
