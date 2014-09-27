@@ -51,7 +51,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
     post_btn_click: function () {
 
         // Validate input
-        var post_html = CKEDITOR.instances.post_editor.getData();
+        var post_html = CKEDITOR.instances.post_ckeditor.getData();
         if(!post_html || post_html == null || post_html == "") {
             this.show_alert('Write a post first!', 'alert-danger');
             return;
@@ -112,7 +112,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         this.show_alert('Post submitted!', 'alert-success');
 
-        CKEDITOR.instances.post_editor.setData('Feel like writing something else?');
+        CKEDITOR.instances.post_ckeditor.setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
 
