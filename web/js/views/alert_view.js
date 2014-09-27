@@ -28,7 +28,11 @@ window.COC.views.Alert = Backbone.View.extend({
 
         // Set alert to fade out.
         setTimeout(function() {
-            alert_div.fadeTo(500, 0).slideUp(501, function(){
+            alert_div.fadeTo(500, 0).slideUp(500, function() {
+
+                // fadeTo and/or slideUp leave crumbs behind in the style. (eg. display: none; and opacity: 0)
+                alert_div.removeAttr('style');
+
                 alert_div.removeClass('show');
                 alert_div.addClass('hidden');
 
