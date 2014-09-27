@@ -69,9 +69,8 @@ window.COC.views.PostBlog = Backbone.View.extend({
             return;
         }
 
-        //var date_picker_div = $('#post_date_picker');
-        ///var date = date_picker_div.datepicker('getDate');
-        var date = new Date();
+        var date_picker_div = $('#post_date_picker');
+        var date = date_picker_div.datepicker('getDate');
         var iso_date_str = date.toISOString();
         var data = {
             "title": title,
