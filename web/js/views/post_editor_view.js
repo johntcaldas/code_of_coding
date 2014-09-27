@@ -9,11 +9,11 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
     // The list of elements we'll be manipulating from this view.
     elements: {
-       date_picker_div: null,
-       alert_div: null,
-       title_txt: null,
-       tags_txt: null,
-       post_btn: null
+        date_picker_div: null,
+        title_txt: null,
+        tags_txt: null,
+        post_btn: null,
+        alert_view: null
     },
 
     initialize: function () {
@@ -29,10 +29,10 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         // Grab references to the elements we're going to be manipulating.
         this.elements.date_picker_div = $('#post_date_picker');
-        this.elements.alert_div = $('#post_blog_alert');
         this.elements.title_txt = $('#title_txt');
         this.elements.tags_txt = $('#tags_txt');
         this.elements.post_btn = $('#post_btn');
+        this.elements.alert_view = new COC.views.Alert({ el:$('#post_blog_alert_attach_point') });
 
         // Initialize CKEditor.
         CKEDITOR.replace('post_ckeditor');
@@ -52,20 +52,20 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         // Validate input
         var post_html = CKEDITOR.instances.post_ckeditor.getData();
-        if(!post_html || post_html == null || post_html == "") {
-            this.show_alert('Write a post first!', 'alert-danger');
+        if (!post_html || post_html == null || post_html == "") {
+            this.elements.alert_view.show_alert('Write a post first!', 'alert-danger');
             return;
         }
 
         var title = this.elements.title_txt.val();
-        if(!title || title == null || title == "") {
-            this.show_alert('You might want to give that post a title!', 'alert-danger');
+        if (!title || title == null || title == "") {
+            this.elements.alert_view.show_alert('You might want to give that post a title!', 'alert-danger');
             return;
         }
 
         var tags = this.elements.tags_txt.val();
-        if(!tags || tags == null || tags == "") {
-            this.show_alert('You might want to come up with some tags!', 'alert-danger');
+        if (!tags || tags == null || tags == "") {
+            this.elements.alert_view.show_alert('You might want to come up with some tags!', 'alert-danger');
             return;
         }
 
@@ -95,37 +95,15 @@ window.COC.views.PostEditor = Backbone.View.extend({
         }.bind(this), 300);
 
 
-        if(!data.success) {
-            this.show_alert('Error submitting to server!', 'alert-danger');
+        if (!data.success) {
+            this.elements.alert_view.show_alert('Error submitting to server!', 'alert-danger');
             return;
         }
 
-        this.show_alert('Post submitted!', 'alert-success');
+        this.elements.alert_view.show_alert('Post submitted!', 'alert-success');
 
         CKEDITOR.instances.post_ckeditor.setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
-
-    },
-
-    show_alert: function(text, bootstrap_class) {
-        var alert_div = this.elements.alert_div;
-
-        alert_div.html(text);
-        alert_div.addClass(bootstrap_class);
-        alert_div.addClass('show');
-        alert_div.removeClass('hidden');
-
-        // Set alert to fade out.
-        setTimeout(function() {
-            alert_div.fadeTo(500, 0).slideUp(500, function(){
-                alert_div.removeClass('show');
-                alert_div.addClass('hidden');
-
-                // Remove potentially used bootstrap classes
-                alert_div.removeClass('alert-danger');
-                alert_div.removeClass('alert-success');
-            });
-        }, 5000);
     }
 });
