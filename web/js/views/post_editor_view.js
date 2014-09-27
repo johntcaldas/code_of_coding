@@ -1,6 +1,6 @@
 "use strict";
 
-window.COC.views.PostBlog = Backbone.View.extend({
+window.COC.views.PostEditor = Backbone.View.extend({
 
     // Backbone's dictionary of events.
     events: {
@@ -23,7 +23,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
     render: function () {
 
         // Render template html and place on page.
-        var template = templates['handlebars/post_blog.handlebars'];
+        var template = templates['handlebars/post_editor.handlebars'];
         var html = template();
         this.$el.html(html);
 
@@ -35,7 +35,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
         this.elements.post_btn = $('#post_btn');
 
         // Initialize CKEditor.
-        CKEDITOR.replace('post_editor');
+        CKEDITOR.replace('post_ckeditor');
 
         // Initialize the date picker.
         var date_picker = this.elements.date_picker_div;
