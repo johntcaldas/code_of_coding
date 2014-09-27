@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO: I somehow forgot camel casing in this file ...
-
 window.COC.views.PostBlog = Backbone.View.extend({
 
     // Backbone's dictionary of events.
@@ -24,7 +22,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
 
     render: function () {
 
-        // Render tamplate html and place on page.
+        // Render template html and place on page.
         var template = templates['handlebars/post_blog.handlebars'];
         var html = template();
         this.$el.html(html);
@@ -74,26 +72,26 @@ window.COC.views.PostBlog = Backbone.View.extend({
         //var date_picker_div = $('#post_date_picker');
         ///var date = date_picker_div.datepicker('getDate');
         var date = new Date();
-        var isoDateStr = date.toISOString();
+        var iso_date_str = date.toISOString();
         var data = {
             "title": title,
             "html": post_html,
             "tags": tags,
-            "date": isoDateStr
+            "date": iso_date_str
         };
 
         // Set button to loading text
         this.elements.post_btn.button('loading');
 
         // Post to server
-        var url = COC.serverUrlRoot + "/posts/";
+        var url = COC.server_url_root + "/posts/";
 
         $.ajax({
             url: url,
             type: 'post',
             data: data,
             headers: {
-              "X-AuthToken": COC.sessionToken
+              "X-AuthToken": COC.session_token
             },
             dataType: 'json',
             success: this.post_to_server_success.bind(this)

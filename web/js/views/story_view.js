@@ -1,3 +1,5 @@
+"use strict";
+
 window.COC.views.Story = Backbone.View.extend({
 
     log_tag: "story_view",
@@ -12,7 +14,7 @@ window.COC.views.Story = Backbone.View.extend({
         var html = template();
         this.$el.html(html);
 
-        var url = COC.serverUrlRoot + "/posts/";
+        var url = COC.server_url_root + "/posts/";
         $.get(url, this.render_posts_from_server);
     },
 
@@ -32,18 +34,41 @@ window.COC.views.Story = Backbone.View.extend({
             var post = posts[i];
 
             // Format the date.
-            var momentDate = moment(post.date, moment.ISO_8601);
-            var stringDate = momentDate.format("dddd, MMMM Do YYYY");
+            var moment_date = moment(post.date, moment.ISO_8601);
+            var string_date = moment_date.format("dddd, MMMM Do YYYY");
 
             var context = {
                 "title": post.title,
                 "html": post.html,
-                "date": stringDate
-            }
+                "date": string_date,
+                "object_id": post._id
+            };
             var html = post_template(context);
-            post_attach_point_div.append(html);
+
+            // Create JQuery DOM object from html
+            // See http://stackoverflow.com/questions/11047670/creating-a-jquery-object-from-a-big-html-string
+            var postDiv = $('<div/>').html(html).contents();
+
+            postDiv.dblclick(function(event) {
+                // The target will be a specific part of the post view (heading/body/footer)
+                var clicked_element = $(event.target);
+                if(clicked_element.hasClass('panel-heading')) {
+                    console.log("I'm a panel");
+                }
+                if(clicked_element.hasClass('panel-body')) {
+                    console.log("I'm a panel body");
+                }
+                if(clicked_element.hasClass('panel-footer')) {
+                    console.log("I'm a panel footer");
+                }
+                debugger;
+            });
+
+            post_attach_point_div.append(postDiv);
         }
+    },
 
-
+    edit_post: function(param) {
+        debugger;
     }
 });

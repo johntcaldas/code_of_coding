@@ -64,7 +64,7 @@ window.COC.views.Login = Backbone.View.extend({
         // Set button to loading text
         this.elements.login_btn.button('loading');
 
-        var url = COC.serverUrlRoot + "/authenticate/";
+        var url = COC.server_url_root + "/authenticate/";
         $.post(url, data, this.handle_login_response.bind(this), "json");
     },
 
@@ -89,7 +89,7 @@ window.COC.views.Login = Backbone.View.extend({
             return;
         }
 
-        COC.sessionToken = token;
+        COC.session_token = token;
         this.elements.login_modal.modal('hide');
         this.elements.post_blog_nav_li.removeClass('hidden');
     },
