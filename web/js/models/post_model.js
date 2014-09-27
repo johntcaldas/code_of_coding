@@ -30,8 +30,8 @@ COC.models.Post = Backbone.Model.extend({
 
     url : function() {
         // In this case, POST to '/posts' and PUT to '/post/:id'
-        var url = this._id === undefined ? '/posts/' : '/posts/' + this._id;
-        return url;//this._id ? '/posts/' + this._id : '/posts/';
+        var the_url = this._id === undefined ? '/posts/' : '/posts/' + this._id;
+        return the_url;
     }
 });
 

@@ -80,14 +80,17 @@ window.COC.views.PostEditor = Backbone.View.extend({
             "tags": tags,
             "date": iso_date_str
         });
-        post_model.save();
+        post_model.save({}, {
+            success: this.post_to_server_success.bind( this ),
+            error: this.post_to_server_error.bind( this )
+        });
 
         // Set button to loading text
         this.elements.post_btn.button('loading');
 
     },
 
-    post_to_server_success: function (data) {
+    post_to_server_success: function (model, response, options) {
 
         // Reset button text
         setTimeout(function () {
@@ -95,8 +98,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
         }.bind(this), 300);
 
 
-        if (!data.success) {
-            this.elements.alert_view.show_alert('Error submitting to server!', 'alert-danger');
+        if (!response.success) {
+            this.post_to_server_error(model, response, options);
             return;
         }
 
@@ -105,5 +108,9 @@ window.COC.views.PostEditor = Backbone.View.extend({
         CKEDITOR.instances.post_ckeditor.setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
+    },
+
+    post_to_server_error: function(model, response, options) {
+        this.elements.alert_view.show_alert('Error posting to server!', 'alert-danger');
     }
 });
