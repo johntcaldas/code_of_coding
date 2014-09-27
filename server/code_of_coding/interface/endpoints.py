@@ -38,10 +38,10 @@ def get_posts():
     return jsonify(ret)
 
 
-@app.route("/posts/", methods=['POST'])
+@app.route("/posts/", methods=['POST', 'OPTIONS'])
 @auth
 def add_post():
-    post_data = request.form
+    post_data = request.get_json()
     title = post_data['title']
     html = post_data['html']
     tags = post_data['tags']

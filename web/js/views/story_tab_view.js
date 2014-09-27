@@ -4,6 +4,10 @@ window.COC.views.Story = Backbone.View.extend({
 
     log_tag: "story_view",
 
+    elements: {
+      edit_post_modal: null
+    },
+
     initialize: function () {
         this.render();
     },
@@ -47,9 +51,9 @@ window.COC.views.Story = Backbone.View.extend({
 
             // Create JQuery DOM object from html
             // See http://stackoverflow.com/questions/11047670/creating-a-jquery-object-from-a-big-html-string
-            var postDiv = $('<div/>').html(html).contents();
+            var post_div = $('<div/>').html(html).contents();
 
-            postDiv.dblclick(function(event) {
+            post_div.dblclick(function(event) {
                 // The target will be a specific part of the post view (heading/body/footer)
                 var clicked_element = $(event.target);
                 if(clicked_element.hasClass('panel-heading')) {
@@ -64,11 +68,24 @@ window.COC.views.Story = Backbone.View.extend({
                 debugger;
             });
 
-            post_attach_point_div.append(postDiv);
+            post_attach_point_div.append(post_div);
         }
     },
 
-    edit_post: function(param) {
-        debugger;
+    edit_post: function(post_div) {
+        if(this.elements.edit_post_modal === null) {
+            var modal_template = templates['handlebars/modal.handlebars'];
+            var html = modal_template();
+            var edit_post_modal = $('<div/>').html(html).contents();
+            this.elements.edit_post_modal = edit_post_modal;
+            this.$el.append(edit_post_modal);
+
+            var modal_body = edit_post_modal.find('.modal-body');
+
+
+        }
+
+        this.elements.edit_post_modal.show();
+
     }
 });

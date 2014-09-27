@@ -72,29 +72,19 @@ window.COC.views.PostEditor = Backbone.View.extend({
         var date_picker_div = $('#post_date_picker');
         var date = date_picker_div.datepicker('getDate');
         var iso_date_str = date.toISOString();
-        var data = {
+
+
+        var post_model = new COC.models.Post({
             "title": title,
             "html": post_html,
             "tags": tags,
             "date": iso_date_str
-        };
+        });
+        post_model.save();
 
         // Set button to loading text
         this.elements.post_btn.button('loading');
 
-        // Post to server
-        var url = COC.server_url_root + "/posts/";
-
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: data,
-            headers: {
-              "X-AuthToken": COC.session_token
-            },
-            dataType: 'json',
-            success: this.post_to_server_success.bind(this)
-        });
     },
 
     post_to_server_success: function (data) {

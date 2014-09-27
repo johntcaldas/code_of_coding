@@ -1,4 +1,4 @@
-from flask import make_response
+from flask import make_response, request
 
 from code_of_coding import app
 
@@ -17,5 +17,7 @@ def teardown_request(exception):
 def after_request_callback(response):
     response = make_response(response)
     response.headers['Access-Control-Allow-Origin'] = "*"
-    response.headers['Access-Control-Allow-Headers'] = "X-AuthToken"
+    if 'Access-Control-Request-Headers' in request.headers:
+        response.headers['Access-Control-Allow-Headers'] = request.headers['Access-Control-Request-Headers']
+    response.headers['Access-Control-Allow-Methods'] = "GET, POST, OPTIONS, PUT, DELETE"
     return response
