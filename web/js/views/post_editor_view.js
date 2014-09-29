@@ -1,3 +1,10 @@
+// A post editor widget used when both posting and editing material.
+// Initialize takes an optional "post" model instance. When present, the editor will be in 'edit' mode, and when absent
+// the editor will be in 'add' mode.
+// options: {
+//     post:           An instance of a post model. Pass in when editing, leave out when creating.
+// }
+
 "use strict";
 
 window.COC.views.PostEditor = Backbone.View.extend({
@@ -9,6 +16,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
     // The list of elements we'll be manipulating from this view.
     elements: {
+        post_editor_text_area: null,
         date_picker_div: null,
         title_txt: null,
         tags_txt: null,
@@ -16,26 +24,26 @@ window.COC.views.PostEditor = Backbone.View.extend({
         alert_view: null
     },
 
+
+    post: null,           // Backbone model instance for a post. Present in 'edit' mode.
+    editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
+
     initialize: function () {
         this.render();
-    },
-
-    render: function () {
-
-        // Render template html and place on page.
-        var template = templates['handlebars/post_editor.handlebars'];
-        var html = template();
-        this.$el.html(html);
 
         // Grab references to the elements we're going to be manipulating.
-        this.elements.date_picker_div = $('#post_date_picker');
-        this.elements.title_txt = $('#title_txt');
-        this.elements.tags_txt = $('#tags_txt');
-        this.elements.post_btn = $('#post_btn');
-        this.elements.alert_view = new COC.views.Alert({ el:$('#post_blog_alert_attach_point') });
+        this.elements.post_editor_text_area = this.$el.find('#post_ckeditor');
+        this.elements.date_picker_div = this.$el.find('#post_date_picker');
+        this.elements.title_txt = this.$el.find('#title_txt');
+        this.elements.tags_txt = this.$el.find('#tags_txt');
+        this.elements.post_btn = this.$el.find('#post_btn');
+        this.elements.alert_view = new COC.views.Alert({ el:this.$el.find('#post_blog_alert_attach_point') });
 
         // Initialize CKEditor.
-        CKEDITOR.replace('post_ckeditor');
+        this.editor_dom_id = COC.util.uuid();
+        this.elements.post_editor_text_area.attr("id", this.editor_dom_id);
+        CKEDITOR.replace(this.editor_dom_id);
+
 
         // Initialize the date picker.
         var date_picker = this.elements.date_picker_div;
@@ -44,14 +52,34 @@ window.COC.views.PostEditor = Backbone.View.extend({
             todayBtn: true
         });
 
-        date_picker.datepicker('setValue', new Date());
-        date_picker.datepicker('update', new Date());
+        // If we have a post (eg. because we're editing), populate fields.
+        var date = null;
+        if(this.options && this.options.post) {
+            var post = this.post = this.options.post;
+            CKEDITOR.instances[this.editor_dom_id].setData(post['html']);
+            this.elements.title_txt.val(post['title']);
+            this.elements.tags_txt.val(post['tags']);
+            date = new Date(post['date'])
+        }
+        else {
+            date = new Date();
+        }
+
+        date_picker.datepicker('setValue', date);
+        date_picker.datepicker('update', date);
+    },
+
+    render: function () {
+        // Render template html and place on page.
+        var template = templates['handlebars/post_editor.handlebars'];
+        var html = template();
+        this.$el.html(html);
     },
 
     post_btn_click: function () {
 
         // Validate input
-        var post_html = CKEDITOR.instances.post_ckeditor.getData();
+        var post_html = CKEDITOR.instances[this.editor_dom_id].getData();
         if (!post_html || post_html == null || post_html == "") {
             this.elements.alert_view.show_alert('Write a post first!', 'alert-danger');
             return;
@@ -105,7 +133,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         this.elements.alert_view.show_alert('Post submitted!', 'alert-success');
 
-        CKEDITOR.instances.post_ckeditor.setData('Feel like writing something else?');
+        CKEDITOR.instances[this.editor_dom_id].setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
     },

@@ -14,7 +14,7 @@ var BodyContainer = Backbone.View.extend({
         COC.router.on('route:login', function () {
             if (COC.views.login_view === undefined) {
                 COC.log.info(this.log_tag + "Loading login view ...");
-                COC.views.login_view = new COC.views.Login({el: $('#login')});
+                COC.views.login_view = new COC.views.Login({el: this.$el.find('#login')});
             }
 
             COC.views.login_view.show_modal();
@@ -28,7 +28,7 @@ var BodyContainer = Backbone.View.extend({
         COC.router.on('route:post', function () {
             if (COC.views.post_view === undefined) {
                 COC.log.info(this.log_tag + " Loading post view ...");
-                COC.views.post_view = new COC.views.PostBlog({el: $('#post')});
+                COC.views.post_view = new COC.views.PostBlog({el: this.$el.find('#post')});
             }
 
             $('a[href="#post"]').tab('show');
@@ -37,7 +37,7 @@ var BodyContainer = Backbone.View.extend({
         COC.router.on('route:story', function () {
             if (COC.views.story_view === undefined) {
                 COC.log.info(this.log_tag + " Loading story view ...");
-                COC.views.story_view = new COC.views.Story({el: $('#story')});
+                COC.views.story_view = new COC.views.Story({el: this.$el.find('#story')});
             }
 
             $('a[href="#story"]').tab('show');

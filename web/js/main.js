@@ -9,4 +9,8 @@ $(document).ready(function() {
         COC.session_token = session_token;
         $('#post_blog_nav_li').removeClass('hidden');
     }
+
+    // Initialize collection of posts.
+    COC.data.posts = new COC.models.PostCollection();
+    COC.data.posts.fetch({url: COC.server_url_root + "/posts/"});
 });

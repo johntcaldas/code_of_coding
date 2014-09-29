@@ -21,21 +21,20 @@ window.COC.views.Login = Backbone.View.extend({
 
     initialize: function () {
         this.render();
+
+        // Grab references to the elements we're going to be manipulating.
+        this.elements.login_modal = this.$el.find('#login_modal');
+        this.elements.username_txt = this.$el.find('#username_txt');
+        this.elements.password_txt = this.$el.find('#password_txt');
+        this.elements.login_btn = this.$el.find('#login_btn');
+        this.elements.post_blog_nav_li = this.$el.find('#post_blog_nav_li');
+        this.elements.alert_view = new COC.views.Alert({el: this.$el.find('#login_alert_attach_point')});
     },
 
     render: function () {
-
         var template = templates['handlebars/login.handlebars'];
         var html = template();
         this.$el.html(html);
-
-        // Grab references to the elements we're going to be manipulating.
-        this.elements.login_modal = $('#login_modal');
-        this.elements.username_txt = $('#username_txt');
-        this.elements.password_txt = $('#password_txt');
-        this.elements.login_btn = $('#login_btn');
-        this.elements.post_blog_nav_li = $('#post_blog_nav_li');
-        this.elements.alert_view = new COC.views.Alert({el: $('#login_alert_attach_point')});
     },
 
     show_modal: function () {

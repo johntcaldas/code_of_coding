@@ -8,9 +8,21 @@
         router: {},
         views: {},
         models: {},
+        data: {},
         util: {},
         server_url_root: 'http://127.0.0.1:5000',
         session_token: null
+    };
+
+    // UUID Generator taken from: http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
+    COC.util.uuid = function() {
+        var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+        });
+        return uuid;
     };
 
 

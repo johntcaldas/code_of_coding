@@ -29,8 +29,9 @@ class BlogPostsService():
         blog_post_id = self.posts.insert(post)
         return blog_post_id
 
-    def update_post(self, post_id, html, tags, date):
+    def update_post(self, post_id, title, html, tags, date):
         self.posts.update({"_id": post_id}, {
+            "title": title,
             "html": html,
             "tags": tags,
             "date": date

@@ -2,6 +2,8 @@
 
 COC.models.Post = Backbone.Model.extend({
 
+    idAttribute: "_id",
+
     defaults: {
         _id: null,
         title: null,
@@ -36,6 +38,15 @@ COC.models.Post = Backbone.Model.extend({
 });
 
 COC.models.PostCollection = Backbone.Collection.extend({
+
     model: COC.models.Post,
-    url: "/posts/"
+    url: COC.server_url_root + "/posts/",
+
+    fetch: function() {
+        $.get(this.url, this.handle_server_response.bind( this ));
+    },
+
+    handle_server_response: function(data) {
+        this.reset(data.posts)
+    }
 });
