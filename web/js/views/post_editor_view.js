@@ -28,7 +28,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
     post: null,           // Backbone model instance for a post. Present in 'edit' mode.
     editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
 
-    initialize: function (options) {
+    initialize: function () {
         this.render();
 
         // Grab references to the elements we're going to be manipulating.
@@ -52,19 +52,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             todayBtn: true
         });
 
-        // If we have a post (eg. because we're editing), populate fields.
-        var date = null;
-        if(options && options.post) {
-            var post = this.post = options.post;
-            CKEDITOR.instances[this.editor_dom_id].setData(post.get('html'));
-            this.elements.title_txt.val(post.get('title'));
-            this.elements.tags_txt.val(post.get('tags'));
-            date = new Date(post.get('date'))
-        }
-        else {
-            date = new Date();
-        }
-
+        var date = new Date();
         date_picker.datepicker('setValue', date);
         date_picker.datepicker('update', date);
     },
@@ -74,6 +62,21 @@ window.COC.views.PostEditor = Backbone.View.extend({
         var template = templates['handlebars/post_editor.handlebars'];
         var html = template();
         this.$el.html(html);
+    },
+
+    set_post: function (post) {
+
+        // Place the post html in the editor.
+        CKEDITOR.instances[this.editor_dom_id].setData(post.get('html'));
+
+        // Update fields.
+        this.elements.title_txt.val(post.get('title'));
+        this.elements.tags_txt.val(post.get('tags'));
+
+        // Set the date picker.
+        var date = new Date(post.get('date'));
+        this.elements.date_picker_div.datepicker('setValue', date);
+        this.elements.date_picker_div.datepicker('update', date);
     },
 
     post_btn_click: function () {

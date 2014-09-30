@@ -53,32 +53,21 @@ window.COC.views.Story = Backbone.View.extend({
             // Create JQuery DOM object from html
             // See http://stackoverflow.com/questions/11047670/creating-a-jquery-object-from-a-big-html-string
             var post_div = $('<div/>').html(html).contents();
-
-            post_div.dblclick(function (event) {
-                // The target will be a specific part of the post view (heading/body/footer)
-                var clicked_element = $(event.target);
-                if (clicked_element.hasClass('panel-heading')) {
-                    console.log("I'm a panel");
-                }
-                if (clicked_element.hasClass('panel-body')) {
-                    console.log("I'm a panel body");
-                }
-                if (clicked_element.hasClass('panel-footer')) {
-                    console.log("I'm a panel footer");
-                }
-
-                // Clicked element will always be either 'panel', 'panel body', or 'panel footer'. So, we grab the
-                // parent element to pass it to edit_post.
-                var edit_post_div = clicked_element.parent();
-                edit_post_div = edit_post_div.parent();
-                this.edit_post(edit_post_div);
-            }.bind( this ));
-
             post_attach_point_div.append(post_div);
+
+            // If a user is logged in, allow double-click edits.
+            if(COC.session_token) {
+                var edit_btn = post_div.find('.btn');
+                edit_btn.dblclick(function(event) {
+                    // Get post data to pass to editor.
+                    var post = COC.data.posts.get(event.target.data('object-id'));
+                    this.edit_post(post);
+                }.bind( this ));
+            }
         }
     },
 
-    edit_post: function (post_div) {
+    edit_post: function (post) {
         var modal_body = null;
         var edit_post_modal = null;
 
@@ -95,15 +84,15 @@ window.COC.views.Story = Backbone.View.extend({
 
         // TODO above and below if structures can be refactored.
 
-        // Get post data to pass to editor.
-        var post = COC.data.posts.get(post_div.data('object-id'));
+
 
         // Create a post editor in the modal body
         if (this.elements.editor_view == null) {
             modal_body = edit_post_modal.find('.modal-body');
-            this.elements.editor_view = new COC.views.PostEditor({el: modal_body, post: post});
+            this.elements.editor_view = new COC.views.PostEditor({el: modal_body});
         }
 
+        this.elements.editor_view.set_post(post);
         this.elements.edit_post_modal.modal();
     }
 });
