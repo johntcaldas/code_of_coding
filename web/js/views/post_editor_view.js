@@ -28,7 +28,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
     post: null,           // Backbone model instance for a post. Present in 'edit' mode.
     editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
 
-    initialize: function () {
+    initialize: function (options) {
         this.render();
 
         // Grab references to the elements we're going to be manipulating.
@@ -54,12 +54,12 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         // If we have a post (eg. because we're editing), populate fields.
         var date = null;
-        if(this.options && this.options.post) {
-            var post = this.post = this.options.post;
-            CKEDITOR.instances[this.editor_dom_id].setData(post['html']);
-            this.elements.title_txt.val(post['title']);
-            this.elements.tags_txt.val(post['tags']);
-            date = new Date(post['date'])
+        if(options && options.post) {
+            var post = this.post = options.post;
+            CKEDITOR.instances[this.editor_dom_id].setData(post.get('html'));
+            this.elements.title_txt.val(post.get('title'));
+            this.elements.tags_txt.val(post.get('tags'));
+            date = new Date(post.get('date'))
         }
         else {
             date = new Date();
