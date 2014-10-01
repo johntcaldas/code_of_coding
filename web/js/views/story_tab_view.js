@@ -58,9 +58,10 @@ window.COC.views.Story = Backbone.View.extend({
             // If a user is logged in, allow double-click edits.
             if(COC.session_token) {
                 var edit_btn = post_div.find('.btn');
-                edit_btn.dblclick(function(event) {
+                edit_btn.removeClass("hidden");
+                edit_btn.click(function(event) {
                     // Get post data to pass to editor.
-                    var post = COC.data.posts.get(event.target.data('object-id'));
+                    var post = COC.data.posts.get($(event.target).data('object-id'));
                     this.edit_post(post);
                 }.bind( this ));
             }
