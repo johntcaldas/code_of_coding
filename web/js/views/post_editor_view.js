@@ -77,6 +77,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
         var date = new Date(post.get('date'));
         this.elements.date_picker_div.datepicker('setValue', date);
         this.elements.date_picker_div.datepicker('update', date);
+
+        this.post = post;
     },
 
     post_btn_click: function () {
@@ -105,12 +107,20 @@ window.COC.views.PostEditor = Backbone.View.extend({
         var iso_date_str = date.toISOString();
 
 
-        var post_model = new COC.models.Post({
+        var post_model = null;
+        if(this.post) {
+            post_model = this.post;
+        }
+        else {
+            post_model = new COC.models.Post({});
+        }
+        post_model.set({
             "title": title,
             "html": post_html,
             "tags": tags,
             "date": iso_date_str
         });
+
         post_model.save({}, {
             success: this.post_to_server_success.bind( this ),
             error: this.post_to_server_error.bind( this )

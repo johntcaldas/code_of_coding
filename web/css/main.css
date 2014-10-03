@@ -1,12 +1,7 @@
-/*******************************
-* Color Reference              *
-*******************************/
-.bodyBackground { color: #272b30; }
+/* Makes the date picker visible when used in a bootstrap modal */
+.datepicker{z-index:1151 !important;}
 
-
-
-
-
+/* Used in body_container */
 #top_level_content {
     margin-top: 4em;
 }
