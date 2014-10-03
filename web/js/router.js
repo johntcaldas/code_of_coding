@@ -20,7 +20,7 @@ var Router = Backbone.Router.extend({
     Backbone.history.start();
 
     // Load up the mother of all views.
-    var topLevelNavigation = new BodyContainer({el: $('#body_container_div')});
+    var top_level_navigation = new BodyContainer({el: $('#body_container_div')});
 
 
     // On initial page load, look for the anchor tag in the path, and poke that route.

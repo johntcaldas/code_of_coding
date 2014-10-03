@@ -11,14 +11,15 @@ from interface_utils import auth
 
 @app.route("/authenticate/", methods=['POST'])
 def authenticate():
-    post_data = request.form
+    post_data = request.get_json()
     username = post_data['username']
     password = post_data['password']
-    session_token = authentication_service.authenticate(username, password)
+    session = authentication_service.authenticate(username, password)
 
     ret = {
         "success": True,
-        "token": session_token
+        "token": session['token'],
+        "expires": session['expires']
     }
 
     return jsonify(ret)
@@ -37,10 +38,10 @@ def get_posts():
     return jsonify(ret)
 
 
-@app.route("/posts/", methods=['POST'])
+@app.route("/posts/", methods=['POST', 'OPTIONS'])
 @auth
 def add_post():
-    post_data = request.form
+    post_data = request.get_json()
     title = post_data['title']
     html = post_data['html']
     tags = post_data['tags']
@@ -58,10 +59,32 @@ def add_post():
     return jsonify(ret)
 
 
+@app.route("/posts/", methods=['PUT', 'OPTIONS'])
+@auth
+def update_post():
+    post_data = request.get_json()
+    post_id = post_data['_id']
+    title = post_data['title']
+    html = post_data['html']
+    tags = post_data['tags']
+    iso_date_string = post_data['date']
+    date_object = dateutil.parser.parse(iso_date_string)
+
+    blog_posts_service = BlogPostsService()
+    post_id = blog_posts_service.update_post(post_id, title, html, tags, date_object)
+
+    ret = {
+        "success": True,
+        "post_id": post_id
+    }
+
+    return jsonify(ret)
+
+
 @app.route("/log_client_message/", methods=['POST'])
 def log_client_message():
 
-    log_message = request.form
+    log_message = request.get_json()
 
     message = log_message['message']
     level = log_message['level']
