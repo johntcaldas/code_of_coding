@@ -38,6 +38,7 @@ window.COC.views.Story = Backbone.View.extend({
             var moment_date = moment(post.get("date"), moment.ISO_8601);
             var string_date = moment_date.format("dddd, MMMM Do YYYY");
 
+            // Render the post template.
             var context = {
                 "title": post.get("title"),
                 "html": post.get("html"),
@@ -69,30 +70,25 @@ window.COC.views.Story = Backbone.View.extend({
     },
 
     edit_post: function (post) {
+
+        // If our post modal is null, this is our first edit. Create and render the modal and editor.
         var modal_body = null;
         var edit_post_modal = null;
-
         if (this.elements.edit_post_modal === null) {
+
+            // Render the modal.
             var modal_template = templates['handlebars/modal.handlebars'];
             var html = modal_template();
             edit_post_modal = $('<div/>').html(html).contents();
             this.elements.edit_post_modal = edit_post_modal;
             this.$el.append(edit_post_modal);
-        }
-        else {
-            edit_post_modal = this.elements.edit_post_modal;
-        }
 
-        // TODO above and below if structures can be refactored.
-
-
-
-        // Create a post editor in the modal body
-        if (this.elements.editor_view == null) {
+            // Create a new editor and place it in the modal.
             modal_body = edit_post_modal.find('.modal-body');
             this.elements.editor_view = new COC.views.PostEditor({el: modal_body});
         }
 
+        // Prime the editor with the post to be edited and show modal.
         this.elements.editor_view.set_post(post);
         this.elements.edit_post_modal.modal();
     }
