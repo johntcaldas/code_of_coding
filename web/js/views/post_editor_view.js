@@ -1,9 +1,4 @@
 // A post editor widget used when both posting and editing material.
-// Initialize takes an optional "post" model instance. When present, the editor will be in 'edit' mode, and when absent
-// the editor will be in 'add' mode.
-// options: {
-//     post:           An instance of a post model. Pass in when editing, leave out when creating.
-// }
 
 "use strict";
 
@@ -27,6 +22,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
     post: null,           // Backbone model instance for a post. Present in 'edit' mode.
     editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
+    edit_mode: false,     // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
 
     initialize: function () {
         this.render();
@@ -37,7 +33,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.elements.title_txt = this.$el.find('#title_txt');
         this.elements.tags_txt = this.$el.find('#tags_txt');
         this.elements.post_btn = this.$el.find('#post_btn');
-        this.elements.alert_view = new COC.views.Alert({ el:this.$el.find('#post_blog_alert_attach_point') });
+        this.elements.alert_view = new COC.views.Alert({ el: this.$el.find('#post_blog_alert_attach_point') });
 
         // Initialize CKEditor.
         this.editor_dom_id = COC.util.uuid();
@@ -65,6 +61,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
     },
 
     set_post: function (post) {
+
+        this.edit_mode = true;
 
         // Place the post html in the editor.
         CKEDITOR.instances[this.editor_dom_id].setData(post.get('html'));
@@ -108,28 +106,29 @@ window.COC.views.PostEditor = Backbone.View.extend({
         var iso_date_str = date.toISOString();
 
 
-        var post_model = null;
-        if(this.post) {
-            post_model = this.post;
+        if (!this.post) {
+            this.post = new COC.models.Post({});
         }
-        else {
-            post_model = new COC.models.Post({});
-        }
-        post_model.set({
+
+        this.post.set({
             "title": title,
             "html": post_html,
             "tags": tags,
             "date": iso_date_str
         });
 
-        post_model.save({}, {
-            success: this.post_to_server_success.bind( this ),
-            error: this.post_to_server_error.bind( this )
+        this.post.save({}, {
+            success: this.post_to_server_success.bind(this),
+            error: this.post_to_server_error.bind(this)
         });
+
+        // Add the new post to the posts collection.
+        if (!this.edit_mode) {
+            COC.data.posts.add(this.post);
+        }
 
         // Set button to loading text
         this.elements.post_btn.button('loading');
-
     },
 
     post_to_server_success: function (model, response, options) {
@@ -150,9 +149,10 @@ window.COC.views.PostEditor = Backbone.View.extend({
         CKEDITOR.instances[this.editor_dom_id].setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
+        this.edit_mode = false;
     },
 
-    post_to_server_error: function(model, response, options) {
+    post_to_server_error: function (model, response, options) {
         this.elements.alert_view.show_alert('Error posting to server!', 'alert-danger');
     }
 });
