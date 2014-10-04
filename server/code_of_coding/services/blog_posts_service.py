@@ -3,6 +3,7 @@ Blog Posts Service
 
 """
 import pymongo
+from bson.objectid import ObjectId
 from datetime import datetime
 
 from code_of_coding.data import database
@@ -30,7 +31,7 @@ class BlogPostsService():
         return blog_post_id
 
     def update_post(self, post_id, title, html, tags, date):
-        self.posts.update({"_id": post_id}, {
+        self.posts.update({"_id": ObjectId(post_id)}, {
             "title": title,
             "html": html,
             "tags": tags,
