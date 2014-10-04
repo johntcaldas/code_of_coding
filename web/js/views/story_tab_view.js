@@ -15,47 +15,37 @@ window.COC.views.Story = Backbone.View.extend({
 
     render: function () {
 
+        // Render the story container.
         var template = templates['handlebars/story.handlebars'];
-        var html = template();
-        this.$el.html(html);
+        var story_html = template();
+        this.$el.html(story_html);
 
-        var url = COC.server_url_root + "/posts/";
-        $.get(url, this.render_posts_from_server.bind( this ));
-    },
 
-    render_posts_from_server: function (data, textStatus, jqXHR) {
-
-        if (!data.success) {
-            COC.log.error(this.log_tag + " Get posts request unsuccessful.");
-            return;
-        }
-
-        var posts = data.posts;
-
+        // Render each post and insert into the story.
+        var posts = COC.data.posts;
         var post_template = templates['handlebars/story_post.handlebars'];
         var post_attach_point_div = this.$el.find('#story_posts_attach_point');
 
-        for (var i = 0; i < posts.length; i++) {
-            var post = posts[i];
+        posts.each(function(post) {
 
             // Format the date.
-            var moment_date = moment(post.date, moment.ISO_8601);
+            var moment_date = moment(post.get("date"), moment.ISO_8601);
             var string_date = moment_date.format("dddd, MMMM Do YYYY");
 
             var context = {
-                "title": post.title,
-                "html": post.html,
+                "title": post.get("title"),
+                "html": post.get("html"),
                 "date": string_date,
-                "object_id": post._id
+                "object_id": post.get("_id")
             };
-            var html = post_template(context);
+            var post_html = post_template(context);
 
             // Create JQuery DOM object from html
             // See http://stackoverflow.com/questions/11047670/creating-a-jquery-object-from-a-big-html-string
-            var post_div = $('<div/>').html(html).contents();
+            var post_div = $('<div/>').html(post_html).contents();
             post_attach_point_div.append(post_div);
 
-            // If a user is logged in, allow double-click edits.
+            // If a user is logged in, show edit button.
             if(COC.session_token) {
                 var edit_btn = post_div.find('.btn');
                 edit_btn.removeClass("hidden");
@@ -65,7 +55,7 @@ window.COC.views.Story = Backbone.View.extend({
                     this.edit_post(post);
                 }.bind( this ));
             }
-        }
+        }.bind( this ));
     },
 
     edit_post: function (post) {

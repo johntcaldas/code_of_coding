@@ -12,5 +12,5 @@ $(document).ready(function() {
 
     // Initialize collection of posts.
     COC.data.posts = new COC.models.PostCollection();
-    COC.data.posts.fetch({url: COC.server_url_root + "/posts/"});
+    COC.data.posts.fetch();
 });
