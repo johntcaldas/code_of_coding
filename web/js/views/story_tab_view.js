@@ -11,6 +11,9 @@ window.COC.views.Story = Backbone.View.extend({
 
     initialize: function () {
         this.render();
+
+        // Set up listeners for change events
+        //this.listenTo(COC.data.posts, )
     },
 
     render: function () {
@@ -24,7 +27,10 @@ window.COC.views.Story = Backbone.View.extend({
         // Render each post and insert into the story.
         var posts = COC.data.posts;
         var post_template = templates['handlebars/story_post.handlebars'];
-        var post_attach_point_div = this.$el.find('#story_posts_attach_point');
+
+        // Before actually placing the stories in the dom, build out the whole collection into a document fragment.
+        // See http://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html, #2, on avoiding DOM reflows.
+        var document_fragment = $(document.createDocumentFragment());
 
         posts.each(function(post) {
 
@@ -43,7 +49,7 @@ window.COC.views.Story = Backbone.View.extend({
             // Create JQuery DOM object from html
             // See http://stackoverflow.com/questions/11047670/creating-a-jquery-object-from-a-big-html-string
             var post_div = $('<div/>').html(post_html).contents();
-            post_attach_point_div.append(post_div);
+            document_fragment.append(post_div);
 
             // If a user is logged in, show edit button.
             if(COC.session_token) {
@@ -56,6 +62,10 @@ window.COC.views.Story = Backbone.View.extend({
                 }.bind( this ));
             }
         }.bind( this ));
+
+        // After rendering all the stories, place our document fragment in the DOM attach point.
+        var post_attach_point_div = this.$el.find('#story_posts_attach_point');
+        post_attach_point_div.append(document_fragment);
     },
 
     edit_post: function (post) {
