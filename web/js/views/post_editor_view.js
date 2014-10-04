@@ -19,6 +19,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
         alert_view: null
     },
 
+    EDITOR_HEIGHT: "800px",
 
     post: null,           // Backbone model instance for a post. Present in 'edit' mode.
     editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
@@ -38,7 +39,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
         // Initialize CKEditor.
         this.editor_dom_id = COC.util.uuid();
         this.elements.post_editor_text_area.attr("id", this.editor_dom_id);
-        CKEDITOR.replace(this.editor_dom_id);
+        CKEDITOR.replace(this.editor_dom_id, { height: this.EDITOR_HEIGHT });
 
 
         // Initialize the date picker.
