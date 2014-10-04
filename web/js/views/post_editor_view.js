@@ -74,8 +74,9 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.elements.tags_txt.val(post.get('tags'));
 
         // Set the date picker.
-        var date = new Date(post.get('date'));
-        this.elements.date_picker_div.datepicker('setValue', date);
+        var moment_date = COC.util.moment_date_from_iso_string(post.get("date"));
+        var date = moment_date.toDate();
+        this.elements.date_picker_div.datepicker('setDate', date);
         this.elements.date_picker_div.datepicker('update', date);
 
         this.post = post;

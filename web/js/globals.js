@@ -25,6 +25,18 @@
         return uuid;
     };
 
+    // Create a moment.js date object from an ISO8601 string.
+    COC.util.moment_date_from_iso_string = function(iso_string) {
+
+        var moment_date = moment(iso_string, moment.ISO_8601);
+
+        if(!moment_date.isValid()) {
+            COC.log.error("moment_date_from_iso_string() unable to parse iso string: " + iso_string);
+        }
+
+        return moment_date;
+    };
+
 
     //************************************************
     // Log to server                                 *

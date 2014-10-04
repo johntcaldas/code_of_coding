@@ -35,7 +35,7 @@ window.COC.views.Story = Backbone.View.extend({
         posts.each(function(post) {
 
             // Format the date.
-            var moment_date = moment(post.get("date"), moment.ISO_8601);
+            var moment_date = COC.util.moment_date_from_iso_string(post.get("date"));
             var string_date = moment_date.format("dddd, MMMM Do YYYY");
 
             // Render the post template.
