@@ -13,7 +13,7 @@ logging.basicConfig(stream=sys.stderr)
 application.config.from_pyfile(SERVER_CONFIGURATION_FILE, silent=True)
 
 # Configure logging
-formatter = logging.Formatter('%(asctime)s %(pathname)s:%(lineno)d %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s %(module)s:%(lineno)d %(levelname)s - %(message)s')
 file_handler = logging.FileHandler(filename=application.config['SERVER_LOG_FILE'])
 file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.DEBUG)

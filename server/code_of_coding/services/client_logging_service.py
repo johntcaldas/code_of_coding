@@ -1,11 +1,14 @@
+"""
+Client Logging
+This service handles log messages sent over from the COC webapp via log4javascript.
+"""
 import logging
 
 from code_of_coding import app
 
 
-def log(message, level, url):
+def log(message, level):
 
-    pass
     client_logger = logging.getLogger("client_logger")
 
     # Only add a file handler if it isn't already there. (ie. on the first call to this method)
@@ -15,8 +18,6 @@ def log(message, level, url):
         file_handler = logging.FileHandler(filename=app.config['CLIENT_LOG_FILE'])
         file_handler.setFormatter(formatter)
         client_logger.addHandler(file_handler)
-
-    message = "{0} - {1}".format(url, message)
 
     if level in ["ALL", "TRACE", "DEBUG"]:
         client_logger.debug(message)

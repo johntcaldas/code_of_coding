@@ -12,21 +12,31 @@ from interface_utils import auth
 @app.route("/authenticate/", methods=['POST'])
 def authenticate():
     post_data = request.get_json()
+    app.logger.info("authenticate() - {0}".format(post_data))
+
     username = post_data['username']
     password = post_data['password']
     session = authentication_service.authenticate(username, password)
 
-    ret = {
-        "success": True,
-        "token": session['token'],
-        "expires": session['expires']
-    }
+    if session is None:
+        ret = {
+            "success": False,
+            "error": "Failed to authenticate."
+        }
+    else:
+        ret = {
+            "success": True,
+            "token": session['token'],
+            "expires": session['expires']
+        }
 
     return jsonify(ret)
 
 
 @app.route("/posts/", methods=['GET'])
 def get_posts():
+    app.logger.info("get_posts()")
+
     blog_posts_service = BlogPostsService()
     posts = blog_posts_service.get_posts()
 
@@ -42,6 +52,8 @@ def get_posts():
 @auth
 def add_post():
     post_data = request.get_json()
+    app.logger.info("add_post() - {0}".format(post_data))
+
     title = post_data['title']
     html = post_data['html']
     tags = post_data['tags']
@@ -63,6 +75,8 @@ def add_post():
 @auth
 def update_post():
     post_data = request.get_json()
+    app.logger.info("update_post() - {0}".format(post_data))
+
     post_id = post_data['_id']
     title = post_data['title']
     html = post_data['html']
@@ -85,11 +99,8 @@ def update_post():
 def log_client_message():
 
     log_message = request.get_json()
-
     message = log_message['message']
     level = log_message['level']
-    url = log_message['url']
-
-    client_logging_service.log(message, level, url)
+    client_logging_service.log(message, level)
 
     return jsonify({"success": True})

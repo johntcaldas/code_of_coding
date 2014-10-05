@@ -1,6 +1,7 @@
 """
 The main execution entry-point for the webapp/services.
-NOTE: When deployed (tested w/Apache+mode_wsgi) this file is not executed.
+NOTE: When deployed (tested w/Apache+mode_wsgi) this file is not executed. For now, meaningful changes made here will
+need equivalent changes in coc_server.wsgi, so that they are reflected when deployed behind a web server (eg. apache).
 """
 
 # Import system stuff
@@ -15,7 +16,7 @@ from code_of_coding import app
 app.config.from_pyfile("server.cfg", silent=True)
 
 # Configure logging
-formatter = logging.Formatter('%(asctime)s %(pathname)s:%(lineno)d %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s %(module)s:%(lineno)d %(levelname)s - %(message)s')
 file_handler = logging.FileHandler(filename=app.config['SERVER_LOG_FILE'])
 file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.DEBUG)

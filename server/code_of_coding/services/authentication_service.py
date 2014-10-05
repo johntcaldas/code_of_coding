@@ -1,6 +1,6 @@
 # Authentication
 
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 import uuid
 import hashlib
 
@@ -58,8 +58,6 @@ def validate_session(token):
         return False
 
     return True
-
-
 
 
 # Helpers

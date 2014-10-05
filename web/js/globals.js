@@ -62,7 +62,6 @@
                 'logger': logging_event.logger.name,
                 'timestamp': logging_event.timeStampInMilliseconds,
                 'level': logging_event.level.name,
-                'url': window.location.href,
                 'message': logging_event.getCombinedMessages(),
                 'exception': logging_event.getThrowableStrRep()
             });
