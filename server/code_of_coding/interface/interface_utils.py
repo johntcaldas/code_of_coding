@@ -55,6 +55,7 @@ def cross_domain(origin=None, methods=None, headers=None, max_age=21600, attach_
     """
     Endpoints decorated with cross_domain will be available as cross domain resources (CORS).
     See http://flask.pocoo.org/snippets/56/
+    Example usage: @cross_domain(origin='*')
     """
     if methods is not None:
         methods = ', '.join(sorted(x.upper() for x in methods))

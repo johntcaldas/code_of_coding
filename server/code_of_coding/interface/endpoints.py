@@ -48,7 +48,7 @@ def get_posts():
     return jsonify(ret)
 
 
-@app.route("/posts/", methods=['POST', 'OPTIONS'])
+@app.route("/posts/", methods=['POST'])
 @auth
 def add_post():
     post_data = request.get_json()
@@ -71,7 +71,7 @@ def add_post():
     return jsonify(ret)
 
 
-@app.route("/posts/", methods=['PUT', 'OPTIONS'])
+@app.route("/posts/", methods=['PUT'])
 @auth
 def update_post():
     post_data = request.get_json()
