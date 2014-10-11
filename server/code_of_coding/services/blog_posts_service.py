@@ -6,6 +6,7 @@ import pymongo
 from bson.objectid import ObjectId
 from datetime import datetime
 
+from code_of_coding import app
 from code_of_coding.data import database
 
 
@@ -28,14 +29,17 @@ class BlogPostsService():
             "date": date
         }
         blog_post_id = self.posts.insert(post)
+        app.logger.debug("Inserted new post with id={0}".format(blog_post_id))
         return blog_post_id
 
     def update_post(self, post_id, title, html, tags, date):
-        self.posts.update({"_id": ObjectId(post_id)}, {
+        write_result = self.posts.update({"_id": ObjectId(post_id)}, {
             "title": title,
             "html": html,
             "tags": tags,
             "date": date
         })
+        app.logger.debug("Updated post. write_result={0}".format(write_result))
+
 
 
