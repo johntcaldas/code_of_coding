@@ -81,7 +81,9 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.post = post;
     },
 
-    post_btn_click: function () {
+    post_btn_click: function (event) {
+
+        event.preventDefault();
 
         // Validate input
         var post_html = CKEDITOR.instances[this.editor_dom_id].getData();
@@ -134,12 +136,6 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
     post_to_server_success: function (model, response, options) {
 
-        // Reset button text
-        setTimeout(function () {
-            this.elements.post_btn.button('reset');
-        }.bind(this), 300);
-
-
         if (!response.success) {
             this.post_to_server_error(model, response, options);
             return;
@@ -151,9 +147,26 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
         this.edit_mode = false;
+
+        this.post_to_server_complete();
     },
 
     post_to_server_error: function (model, response, options) {
+        /* Example error response contains:
+            response.statusText = "UNAUTHORIZED"
+            response.responseText = "Authentication required."
+            options.url = "http://127.0.0.1:5000/posts/"
+            options.headers = { X-AuthToken: "aad913fc06dc4e86ba0378990aff3ce9" }
+         */
         this.elements.alert_view.show_alert('Error posting to server!', 'alert-danger');
+        this.post_to_server_complete();
+    },
+
+    // For things we need to do after every post, regardless of success.
+    post_to_server_complete: function() {
+        // Reset button text
+        setTimeout(function () {
+            this.elements.post_btn.button('reset');
+        }.bind(this), 300);
     }
 });
