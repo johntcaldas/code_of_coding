@@ -1,50 +1,18 @@
 from functools import wraps, update_wrapper
 from flask import request, Response, make_response, current_app
 from datetime import timedelta
-from jsonify import jsonify
+
 
 from code_of_coding import app
 from code_of_coding.services import authentication_service
 
-
-####################
-# Error Handling   #
-####################
-# Error handling modeled after http://flask.pocoo.org/docs/0.10/patterns/apierrors/
-class COCException(Exception):
-    status_code = 500
-
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv['message'] = self.message
-        return rv
-
-
-@app.errorhandler(COCException)
-def handle_coc_exception(error):
-    response = jsonify(error.to_dict())
-    response.status_code = error.status_code
-    return response
-
-
-####################
-# Decorators       #
-####################
 
 def auth(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         token = request.headers.get('X-AuthToken')
         if not authentication_service.validate_session(token):
-            # TODO log method
-            app.logger.info("auth() Auth failed for method")
+            app.logger.info('auth() Authentication failed.')
             return Response('Authentication required.', 401, {'WWWAuthenticate': 'Basic realm="Login Required"'})
         return f(*args, **kwargs)
 

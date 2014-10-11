@@ -12,9 +12,7 @@ COC.models.Post = Backbone.Model.extend({
         date: null
     },
 
-    initialize: function(){
-        console.log("Music is the answer");
-    },
+    initialize: function(){},
 
     // Override backbone's 'save' because we want to be able to run cross-domain.
     // See http://stackoverflow.com/questions/7644767/backbone-js-use-different-urls-for-model-save-and-fetch

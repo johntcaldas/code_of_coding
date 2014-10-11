@@ -7,6 +7,7 @@ from code_of_coding.services import client_logging_service
 from code_of_coding.services import authentication_service
 from jsonify import jsonify
 from interface_utils import auth
+from error_handling import COCException
 
 
 @app.route("/authenticate/", methods=['POST'])
@@ -19,10 +20,7 @@ def authenticate():
     session = authentication_service.authenticate(username, password)
 
     if session is None:
-        ret = {
-            "success": False,
-            "error": "Failed to authenticate."
-        }
+        raise COCException("Failed to authenticate.")
     else:
         ret = {
             "success": True,

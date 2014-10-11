@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 import uuid
 import hashlib
 
-from code_of_coding.data import database
 from code_of_coding import app
+from code_of_coding.data import database
+from code_of_coding.interface.error_handling import COCException
 
 
 def authenticate(username, password):
@@ -16,12 +17,12 @@ def authenticate(username, password):
     user = users.find_one({"username": username})
 
     if user is None:
-        return None
+        raise COCException("Could not find user {0}".format(username))
 
     # Check password
     hashed_password = user['password']
     if not _check_password(hashed_password, password):
-        return None
+        raise COCException("Password validation failed for user {0}".format(username))
 
 
     # Remove any existing sessions
@@ -39,7 +40,8 @@ def authenticate(username, password):
 
     # Store the session with the user
     user['session'] = session
-    users.update({"_id": user['_id']}, user)
+    write_result = users.update({"_id": user['_id']}, user)
+    app.logger.debug("Updated user with session. write_result={0}".format(write_result))
 
     # Return token and expire date.
     return session
@@ -51,11 +53,11 @@ def validate_session(token):
     user = users.find_one({"session.token": token})
 
     if user is None:
-        return False
+        raise COCException("Could not find session for token {0}".format(token))
 
     expires = user['session']['expires']
     if expires < datetime.utcnow():
-        return False
+        raise COCException("Found expired session for token={0} expired={1}".format(token, expires))
 
     return True
 
