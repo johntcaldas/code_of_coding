@@ -19,7 +19,7 @@ var BodyContainer = Backbone.View.extend({
 
         // Wire login modal to keypress: Ctrl+Alt+L Modeled after:
         // http://stackoverflow.com/questions/5203407/javascript-multiple-keys-pressed-at-once
-        var map = [];
+        var map = {};
         var handle_key_presses_for_login = function(event) {
             map[event.keyCode] = event.type == 'keydown';
             if(map[17] && map[18] && map[76]){ // ctrl + alt + l

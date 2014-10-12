@@ -20,7 +20,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.edit_mode = false;     // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
 
         // Grab references to the elements we're going to be manipulating from this view.
-        this.elements = [];
+        this.elements = {};
         this.elements.post_editor_text_area = this.$el.find('#post_ckeditor');
         this.elements.date_picker_div = this.$el.find('#post_date_picker');
         this.elements.title_txt = this.$el.find('#title_txt');
