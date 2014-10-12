@@ -3,6 +3,7 @@
 "use strict";
 
 $(document).ready(function() {
+
     // Check to see if we have a session token stored in a cookie. If so, auto-login.
     var session_token = $.cookie('session_token');
     if (session_token !== undefined) {

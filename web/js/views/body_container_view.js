@@ -16,15 +16,25 @@ var BodyContainer = Backbone.View.extend({
         // TODO
         // 1) Most of this stuff could reasonably (or should?) live in the router directly.
         // 2) We're doing a weird thing here by storing definitions and instances of views on the same object.
-        COC.router.on('route:login', function () {
-            if (COC.views.login_view === undefined) {
-                COC.log.info(this.log_tag + "Loading login view ...");
-                COC.views.login_view = new COC.views.Login({el: this.$el.find('#login')});
+
+        // Wire login modal to keypress: Ctrl+Alt+L Modeled after:
+        // http://stackoverflow.com/questions/5203407/javascript-multiple-keys-pressed-at-once
+        var map = [];
+        var handle_key_presses_for_login = function(event) {
+            map[event.keyCode] = event.type == 'keydown';
+            if(map[17] && map[18] && map[76]){ // ctrl + alt + l
+                if (COC.views.login_view === undefined) {
+                    COC.log.info(this.log_tag + "Loading login view ...");
+                    COC.views.login_view = new COC.views.Login({el: this.$el.find('#login')});
+                }
+
+                COC.views.login_view.show_modal();
             }
+        }.bind(this);
+        $(document.body).keydown(handle_key_presses_for_login);
+        $(document.body).keyup(handle_key_presses_for_login);
 
-            COC.views.login_view.show_modal();
-        }.bind(this));
-
+        
         COC.router.on('route:home', function () {
             // Calling show on the <a> of a nav tells bootstrap TODO
             $('a[data-target="#home"]').tab('show');
@@ -57,6 +67,8 @@ var BodyContainer = Backbone.View.extend({
         this.$el.html(html);
     },
 
+    // We're somewhat overriding the default bootstrap tab behavior in order to wire them together with backbone routes.
+    // You can still see the basic pattern applied from here though: http://getbootstrap.com/javascript/#tabs
     tab_click: function(event) {
         event.preventDefault();
         var anchor_tag = $(event.target);
