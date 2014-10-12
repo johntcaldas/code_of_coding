@@ -11,6 +11,8 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-handlebars": "~0.6.1",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "^0.10.0",
+    "jshint": "^2.5.6"
   }
 }
