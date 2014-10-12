@@ -9,32 +9,25 @@ window.COC.views.PostEditor = Backbone.View.extend({
         "click #post_btn": "post_btn_click"
     },
 
-    // The list of elements we'll be manipulating from this view.
-    elements: {
-        post_editor_text_area: null,
-        date_picker_div: null,
-        title_txt: null,
-        tags_txt: null,
-        post_btn: null,
-        alert_view: null
-    },
-
     EDITOR_HEIGHT: "800px",
-
-    post: null,           // Backbone model instance for a post. Present in 'edit' mode.
-    editor_dom_id: null,  // The dom id of the editor text area to replace with a CKEditor.
-    edit_mode: false,     // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
 
     initialize: function () {
         this.render();
 
-        // Grab references to the elements we're going to be manipulating.
+        // Initialize "instance" variables.
+        this.post = null;           // Backbone model instance for a post. Present in 'edit' mode.
+        this.editor_dom_id = null;  // The dom id of the editor text area to replace with a CKEditor.
+        this.edit_mode = false;     // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
+
+        // Grab references to the elements we're going to be manipulating from this view.
+        this.elements = [];
         this.elements.post_editor_text_area = this.$el.find('#post_ckeditor');
         this.elements.date_picker_div = this.$el.find('#post_date_picker');
         this.elements.title_txt = this.$el.find('#title_txt');
         this.elements.tags_txt = this.$el.find('#tags_txt');
         this.elements.post_btn = this.$el.find('#post_btn');
         this.elements.alert_view = new COC.views.Alert({ el: this.$el.find('#post_blog_alert_attach_point') });
+
 
         // Initialize CKEditor.
         this.editor_dom_id = COC.util.uuid();
@@ -104,8 +97,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             return;
         }
 
-        var date_picker_div = $('#post_date_picker');
-        var date = date_picker_div.datepicker('getDate');
+        var date = this.elements.date_picker_div.datepicker('getDate');
         var iso_date_str = date.toISOString();
 
 

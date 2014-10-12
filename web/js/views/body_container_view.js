@@ -34,7 +34,7 @@ var BodyContainer = Backbone.View.extend({
         $(document.body).keydown(handle_key_presses_for_login);
         $(document.body).keyup(handle_key_presses_for_login);
 
-        
+
         COC.router.on('route:home', function () {
             // Calling show on the <a> of a nav tells bootstrap TODO
             $('a[data-target="#home"]').tab('show');

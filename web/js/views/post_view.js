@@ -14,10 +14,7 @@
 window.COC.views.Post = Backbone.View.extend({
 
     tagName: 'div',
-
     log_tag: "post_view",
-
-    parent_view: null,
 
     initialize: function (options) {
         this.parent_view = options.parent;
