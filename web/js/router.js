@@ -17,7 +17,7 @@ var Router = Backbone.Router.extend({
 
     var router = new Router();
     COC.router = router;
-    Backbone.history.start();
+    Backbone.history.start({ pushState: true, root: "code_of_coding" });
 
     // Load up the mother of all views.
     var top_level_navigation = new BodyContainer({el: $('#body_container_div')});
@@ -25,9 +25,9 @@ var Router = Backbone.Router.extend({
 
     // On initial page load, look for the anchor tag in the path, and poke that route.
     // This method of finding and navigating to the initial route feels hacky, but it seems to work.
-    var url = window.location.href;
+   // var url = window.location.href;
 
-    router.navigate("home", {trigger: true, replace: true});
+    //router.navigate("home", {trigger: true, replace: true});
 
     /*
     for (var route in router.routes) {
