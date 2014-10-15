@@ -14,7 +14,7 @@ var Router = Backbone.Router.extend({
 
     var router = new Router();
     COC.router = router;
-    Backbone.history.start({ pushState: true, root: "code_of_coding" });
+    Backbone.history.start({ pushState: true });
 
     // Load up the mother of all views.
     COC.views.body_container_view = new BodyContainer({el: $('#body_container_div')});

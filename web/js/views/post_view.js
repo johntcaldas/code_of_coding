@@ -16,7 +16,13 @@ window.COC.views.Post = Backbone.View.extend({
     tagName: 'div',
     log_tag: "post_view",
 
+    events: {
+        "click #title" : "go_to_post_page",
+        "click #read_more_btn" : "go_to_post_page"
+    },
+
     initialize: function (options) {
+
         this.parent_view = options.parent;
 
         this.render();
@@ -53,5 +59,9 @@ window.COC.views.Post = Backbone.View.extend({
                 this.parent_view.edit_post(this.model);
             }.bind(this));
         }
+    },
+
+    go_to_post_page: function() {
+        Backbone.history.navigate("home", {trigger: true});
     }
 });
