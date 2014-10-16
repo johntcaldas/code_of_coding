@@ -55,6 +55,7 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.story_view = new COC.views.Story({el: this.$el.find('#story')});
             }
 
+            COC.views.story_view.show_story();
             $('a[data-target="#story"]').tab('show');
         }.bind(this));
 

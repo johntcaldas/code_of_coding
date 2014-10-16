@@ -51,7 +51,7 @@ window.COC.views.Post = Backbone.View.extend({
         // If a user is logged in, and there's a parent view to handle editing, show edit button.
         if (COC.session_token && this.parent_view) {
 
-            var edit_btn = this.$el.find('.btn');
+            var edit_btn = this.$el.find('#edit_btn');
             edit_btn.removeClass("hidden");
 
             edit_btn.click(function (event) {
@@ -62,6 +62,6 @@ window.COC.views.Post = Backbone.View.extend({
     },
 
     go_to_post_page: function() {
-        Backbone.history.navigate("home", {trigger: true});
+        Backbone.history.navigate("posts/" + this.model.get("_id"), { trigger: true });
     }
 });
