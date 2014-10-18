@@ -62,6 +62,7 @@ window.COC.views.Post = Backbone.View.extend({
     },
 
     go_to_post_page: function() {
-        Backbone.history.navigate("posts/" + this.model.get("_id"), { trigger: true });
+        var url_title = COC.util.string_to_url_component(this.model.get("title"));
+        Backbone.history.navigate("posts/" + url_title, { trigger: true });
     }
 });

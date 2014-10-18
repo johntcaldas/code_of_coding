@@ -25,7 +25,7 @@ window.COC.views.PostList = Backbone.View.extend({
         COC.data.posts.each(function (post) {
             var post_data = {};
             post_data['title'] = post.get("title");
-            post_data['url'] = "posts/" +  post.get("_id");
+            post_data['url'] = "posts/" +  COC.util.string_to_url_component(post.get("title"));
             posts.push(post_data);
         });
 

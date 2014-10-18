@@ -6,7 +6,7 @@ var Router = Backbone.Router.extend({
         "home": "home",
         "post": "post",
         "story": "story",
-        "posts/:id": "posts"
+        "posts/:id_or_title": "posts"
     }
 });
 
@@ -22,6 +22,7 @@ var Router = Backbone.Router.extend({
 
     // Intercept clicks on any anchor tags. If they aren't outgoing to other sites, preventDefault and navigate
     // without a page load.
+    // Code modeled after: http://stackoverflow.com/questions/12081894/backbone-router-navigate-and-anchor-href
     $(document).on("click", "a:not([data-bypass])", function(evt) {
         var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
         var root = COC.url_root;
