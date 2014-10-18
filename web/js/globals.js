@@ -11,6 +11,7 @@
         data: {},
         util: {},
         server_url_root: 'http://127.0.0.1:5000',
+        url_root: location.protocol + "//" + location.host,
         session_token: null
     };
 

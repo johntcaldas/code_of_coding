@@ -20,4 +20,14 @@ var Router = Backbone.Router.extend({
     // Load up the mother of all views.
     COC.views.body_container_view = new BodyContainer({el: $('#body_container_div')});
 
+    // Intercept clicks on any anchor tags. If they aren't outgoing to other sites, preventDefault and navigate
+    // without a page load.
+    $(document).on("click", "a:not([data-bypass])", function(evt) {
+        var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
+        var root = COC.url_root;
+        if (href.prop && href.prop.slice(0, root.length) === root) {
+            evt.preventDefault();
+            Backbone.history.navigate(href.attr, { trigger: true });
+        }
+    });
 })();
