@@ -6,11 +6,9 @@
         <div class="col-md-3">
             <p class="lead">Some Posts</p>
             <div id="post_list_attach_point" class="list-group">
-                <a href="#" class="list-group-item">Cras justo odio</a>
-                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item active">Morbi leo risus</a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item">Vestibulum at eros</a>
+                {{#each post_list}}
+                    <a href="#" class="list-group-item" data-object-id="{{object_id}}">{{title}}</a>
+                {{/each}}
             </div>
         </div>
 

@@ -7,8 +7,7 @@ window.COC.views.Story = Backbone.View.extend({
     elements: {
         edit_post_modal: null,
         editor_view: null,
-        post_attach_point_div: null,
-        post_list_attach_point: null
+        post_attach_point_div: null
     },
 
     // Array of subviews for individual posts.
@@ -31,24 +30,6 @@ window.COC.views.Story = Backbone.View.extend({
 
         // Set up listeners for change events
         this.listenTo(COC.data.posts, "add", this.post_added.bind(this));
-
-        // TODO comment me?
-        this.elements.post_list_attach_point = this.$el.find('#post_list_attach_point');
-        COC.router.on('route:posts', function (id) {
-            var post_model = COC.data.posts.get(id);
-            if (COC.views.post_list === undefined) {
-                COC.views.post_list = new COC.views.PostList (
-                    { model: post_model, el: this.elements.post_list_attach_point }
-                );
-            }
-            else {
-                COC.views.post_list.model = post_model;
-            }
-
-            this.show_list();
-
-        }.bind(this));
-
     },
 
     render: function () {
@@ -91,15 +72,5 @@ window.COC.views.Story = Backbone.View.extend({
         var post_view = new COC.views.Post({ model: post, parent: this});
         this.post_views.push(post_view);
         return post_view;
-    },
-
-    show_story: function() {
-        this.elements.post_list_attach_point.addClass('hidden');
-        this.elements.post_attach_point_div.removeClass('hidden');
-    },
-
-    show_list: function() {
-        this.elements.post_attach_point_div.addClass('hidden');
-        this.elements.post_list_attach_point.removeClass('hidden');
     }
 });

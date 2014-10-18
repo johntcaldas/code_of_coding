@@ -37,8 +37,9 @@ var BodyContainer = Backbone.View.extend({
 
         COC.router.on('route:home', function () {
             // Calling show on the <a> of a nav tells bootstrap TODO
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#home"]').tab('show');
-        });
+        }.bind(this));
 
         COC.router.on('route:post', function () {
             if (COC.views.post_view === undefined) {
@@ -46,6 +47,7 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.post_view = new COC.views.PostBlog({el: this.$el.find('#post')});
             }
 
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#post"]').tab('show');
         }.bind(this));
 
@@ -55,11 +57,32 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.story_view = new COC.views.Story({el: this.$el.find('#story')});
             }
 
-            COC.views.story_view.show_story();
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#story"]').tab('show');
         }.bind(this));
 
+        COC.router.on('route:posts', function (id) {
 
+            if (COC.views.view_post !== undefined) {
+                COC.views.view_post.remove();
+            }
+
+            var post_model = COC.data.posts.get(id);
+            var view_post_attach_point = $('<div id="view_post_attach_point"/>');
+            this.$el.append(view_post_attach_point);
+            COC.views.view_post = new COC.views.PostList (
+                { model: post_model, el: view_post_attach_point }
+            );
+
+            // Deselect all tabs.
+            var nav_bar_items = this.$el.find('li');
+            nav_bar_items.removeClass('active');
+            var tab_pane_divs = this.$el.find('.tab-pane');
+            tab_pane_divs.removeClass('active');
+
+            // Show the post list.
+            view_post_attach_point.removeClass('hidden');
+        }.bind(this));
     },
 
     render: function() {
