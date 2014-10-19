@@ -5,7 +5,8 @@ var Router = Backbone.Router.extend({
     routes: {
         "home": "home",
         "post": "post",
-        "story": "story"
+        "story": "story",
+        "posts/:id_or_title": "posts"
     }
 });
 
@@ -14,27 +15,20 @@ var Router = Backbone.Router.extend({
 
     var router = new Router();
     COC.router = router;
-    Backbone.history.start({ pushState: true, root: "code_of_coding" });
+    Backbone.history.start({ pushState: true });
 
     // Load up the mother of all views.
     COC.views.body_container_view = new BodyContainer({el: $('#body_container_div')});
 
-
-    // On initial page load, look for the anchor tag in the path, and poke that route.
-    // This method of finding and navigating to the initial route feels hacky, but it seems to work.
-   // var url = window.location.href;
-
-    //router.navigate("home", {trigger: true, replace: true});
-
-    /*
-    for (var route in router.routes) {
-        if (router.routes.hasOwnProperty(route)) {
-            if (url.indexOf(router.routes[route]) > -1) {
-                //router.routes[route]
-                router.navigate("post", {trigger: true, replace: true});
-            }
+    // Intercept clicks on any anchor tags. If they aren't outgoing to other sites, preventDefault and navigate
+    // without a page load.
+    // Code modeled after: http://stackoverflow.com/questions/12081894/backbone-router-navigate-and-anchor-href
+    $(document).on("click", "a:not([data-bypass])", function(evt) {
+        var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
+        var root = COC.url_root;
+        if (href.prop && href.prop.slice(0, root.length) === root) {
+            evt.preventDefault();
+            Backbone.history.navigate(href.attr, { trigger: true });
         }
-    }
-    */
-
+    });
 })();

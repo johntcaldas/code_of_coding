@@ -10,7 +10,7 @@ var BodyContainer = Backbone.View.extend({
         "click .navbar a[data-toggle]": "tab_click"
     },
 
-    initialize: function() {
+    initialize: function () {
         this.render();
 
         // TODO
@@ -20,9 +20,9 @@ var BodyContainer = Backbone.View.extend({
         // Wire login modal to keypress: Ctrl+Alt+L Modeled after:
         // http://stackoverflow.com/questions/5203407/javascript-multiple-keys-pressed-at-once
         var map = {};
-        var handle_key_presses_for_login = function(event) {
+        var handle_key_presses_for_login = function (event) {
             map[event.keyCode] = event.type == 'keydown';
-            if(map[17] && map[18] && map[76]){ // ctrl + alt + l
+            if (map[17] && map[18] && map[76]) { // ctrl + alt + l
                 if (COC.views.login_view === undefined) {
                     COC.log.info(this.log_tag + "Loading login view ...");
                     COC.views.login_view = new COC.views.Login({el: this.$el.find('#login')});
@@ -37,8 +37,9 @@ var BodyContainer = Backbone.View.extend({
 
         COC.router.on('route:home', function () {
             // Calling show on the <a> of a nav tells bootstrap TODO
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#home"]').tab('show');
-        });
+        }.bind(this));
 
         COC.router.on('route:post', function () {
             if (COC.views.post_view === undefined) {
@@ -46,6 +47,7 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.post_view = new COC.views.PostBlog({el: this.$el.find('#post')});
             }
 
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#post"]').tab('show');
         }.bind(this));
 
@@ -55,13 +57,51 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.story_view = new COC.views.Story({el: this.$el.find('#story')});
             }
 
+            this.$el.find('#view_post_attach_point').addClass('hidden');
             $('a[data-target="#story"]').tab('show');
         }.bind(this));
 
+        COC.router.on('route:posts', function (id_or_title) {
 
+            if (COC.views.view_post !== undefined) {
+                COC.views.view_post.remove();
+            }
+
+            // First check to see if we got a post id
+            var post_model = COC.data.posts.get(id_or_title);
+
+            // If not, then check if we can grab a post by url formatted title.
+            COC.data.posts.each(function (post) {
+                var title = post.get('title');
+                var url_title = COC.util.string_to_url_component(title);
+
+                if (url_title === id_or_title) {
+                    post_model = post;
+                }
+            });
+
+            if(!post_model) {
+                return;
+            }
+
+            var view_post_attach_point = $('<div id="view_post_attach_point"/>');
+            this.$el.append(view_post_attach_point);
+            COC.views.view_post = new COC.views.PostList(
+                { model: post_model, el: view_post_attach_point }
+            );
+
+            // Deselect all tabs.
+            var nav_bar_items = this.$el.find('li');
+            nav_bar_items.removeClass('active');
+            var tab_pane_divs = this.$el.find('.tab-pane');
+            tab_pane_divs.removeClass('active');
+
+            // Show the post list.
+            view_post_attach_point.removeClass('hidden');
+        }.bind(this));
     },
 
-    render: function() {
+    render: function () {
         var template = templates['handlebars/body_container.handlebars'];
         var html = template();
         this.$el.html(html);
@@ -69,7 +109,7 @@ var BodyContainer = Backbone.View.extend({
 
     // We're somewhat overriding the default bootstrap tab behavior in order to wire them together with backbone routes.
     // You can still see the basic pattern applied from here though: http://getbootstrap.com/javascript/#tabs
-    tab_click: function(event) {
+    tab_click: function (event) {
         event.preventDefault();
         var anchor_tag = $(event.target);
         var data_target = anchor_tag.attr("data-target");

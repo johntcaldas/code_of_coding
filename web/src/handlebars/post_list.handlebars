@@ -1,0 +1,39 @@
+<div class="container">
+
+    <div class="row">
+
+        <!-- List of posts on the left -->
+        <div class="col-md-3">
+            <p class="lead">Some Posts</p>
+            <div id="post_list_attach_point" class="list-group">
+                {{#each post_list}}
+                    <a href="{{url}}" class="list-group-item">{{title}}</a>
+                {{/each}}
+            </div>
+        </div>
+
+        <!-- Post on the right -->
+        <div class="col-md-9">
+            <div class="panel panel-default">
+
+                <div class="panel-heading clearfix">
+                    <h4 class="pull-left">{{title}}</h4>
+                    <button type="button"
+                            class="pull-right hidden btn btn-default btn-xs"
+                            data-object-id="{{object_id}}">
+                        Edit
+                    </button>
+                </div>
+
+                <div class="panel-body">
+                    {{{html}}}
+                </div>
+
+                <div class="panel-footer">{{date}}</div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

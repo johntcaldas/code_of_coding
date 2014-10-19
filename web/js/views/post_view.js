@@ -16,7 +16,13 @@ window.COC.views.Post = Backbone.View.extend({
     tagName: 'div',
     log_tag: "post_view",
 
+    events: {
+        "click #title" : "go_to_post_page",
+        "click #read_more_btn" : "go_to_post_page"
+    },
+
     initialize: function (options) {
+
         this.parent_view = options.parent;
 
         this.render();
@@ -45,7 +51,7 @@ window.COC.views.Post = Backbone.View.extend({
         // If a user is logged in, and there's a parent view to handle editing, show edit button.
         if (COC.session_token && this.parent_view) {
 
-            var edit_btn = this.$el.find('.btn');
+            var edit_btn = this.$el.find('#edit_btn');
             edit_btn.removeClass("hidden");
 
             edit_btn.click(function (event) {
@@ -53,5 +59,10 @@ window.COC.views.Post = Backbone.View.extend({
                 this.parent_view.edit_post(this.model);
             }.bind(this));
         }
+    },
+
+    go_to_post_page: function() {
+        var url_title = COC.util.string_to_url_component(this.model.get("title"));
+        Backbone.history.navigate("posts/" + url_title, { trigger: true });
     }
 });

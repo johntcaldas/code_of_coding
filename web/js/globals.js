@@ -11,8 +11,13 @@
         data: {},
         util: {},
         server_url_root: 'http://127.0.0.1:5000',
+        url_root: location.protocol + "//" + location.host,
         session_token: null
     };
+
+    //************************************************
+    // Utilities                                     *
+    //************************************************
 
     // UUID Generator taken from: http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
     COC.util.uuid = function() {
@@ -35,6 +40,18 @@
         }
 
         return moment_date;
+    };
+
+    // Turns a string into something suitable for a url component by replacing spaces with dashes and ripping out
+    // non-word characters.
+    COC.util.string_to_url_component = function(the_string) {
+        // First, replace all spaces with dashes.
+        var string = the_string.replace(" ", "-");
+
+        // Remove anything that is NOT a-z, A-Z, 0-9, or '-'
+        string = string.replace(/[^a-zA-Z0-9\-]/g, "");
+
+        return string;
     };
 
 
