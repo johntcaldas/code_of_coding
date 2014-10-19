@@ -10,9 +10,19 @@
         models: {},
         data: {},
         util: {},
+
+        // The root url of the web service interface.
         server_url_root: 'http://127.0.0.1:5000',
+
+        // The root url of the website.
         url_root: location.protocol + "//" + location.host,
-        session_token: null
+
+        // If authenticated, will contain a session token.
+        session_token: null,
+
+        // Will be set to true if still fetching posts from the server. Useful in post_list_view and post_view. They
+        // can bind on the collection reset event and set up a callback to render the content once it is ready.
+        fetching_posts: false
     };
 
     //************************************************

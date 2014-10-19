@@ -63,32 +63,16 @@ var BodyContainer = Backbone.View.extend({
 
         COC.router.on('route:posts', function (id_or_title) {
 
-            if (COC.views.view_post !== undefined) {
-                COC.views.view_post.remove();
+            if (COC.views.view_post === undefined) {
+                COC.log.info(this.log_tag + " Loading post view ...");
+                COC.views.view_post = new COC.views.PostList({
+                    el: this.$el.find('#view_post_attach_point'),
+                    id_or_title: id_or_title
+                });
             }
-
-            // First check to see if we got a post id
-            var post_model = COC.data.posts.get(id_or_title);
-
-            // If not, then check if we can grab a post by url formatted title.
-            COC.data.posts.each(function (post) {
-                var title = post.get('title');
-                var url_title = COC.util.string_to_url_component(title);
-
-                if (url_title === id_or_title) {
-                    post_model = post;
-                }
-            });
-
-            if(!post_model) {
-                return;
+            else {
+                COC.views.view_post.set_id_or_title(id_or_title);
             }
-
-            var view_post_attach_point = $('<div id="view_post_attach_point"/>');
-            this.$el.append(view_post_attach_point);
-            COC.views.view_post = new COC.views.PostList(
-                { model: post_model, el: view_post_attach_point }
-            );
 
             // Deselect all tabs.
             var nav_bar_items = this.$el.find('li');
@@ -97,7 +81,7 @@ var BodyContainer = Backbone.View.extend({
             tab_pane_divs.removeClass('active');
 
             // Show the post list.
-            view_post_attach_point.removeClass('hidden');
+            this.$el.find('#view_post_attach_point').removeClass('hidden');
         }.bind(this));
     },
 
