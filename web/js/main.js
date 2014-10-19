@@ -25,6 +25,7 @@ $(document).ready(function() {
     COC.views.body_container_view = new BodyContainer({el: $('#body_container_div')});
 
     Backbone.history.start({ pushState: true });
+    Backbone.history.navigate("", { trigger: true });
 
     // Intercept clicks on any anchor tags. If they aren't outgoing to other sites, preventDefault and navigate
     // without a page load. Code modeled after:

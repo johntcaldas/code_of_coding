@@ -39,7 +39,15 @@ window.COC.views.Story = Backbone.View.extend({
         var story_html = template();
         this.$el.html(story_html);
 
+        if(COC.fetching_posts) {
+            COC.data.posts.on('reset', this.load_posts.bind(this));
+        }
+        else {
+            this.load_posts();
+        }
+    },
 
+    load_posts: function () {
         // Render each post and insert into the story.
         var posts = COC.data.posts;
 

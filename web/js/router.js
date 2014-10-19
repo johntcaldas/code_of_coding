@@ -3,6 +3,7 @@
 COC.Router = Backbone.Router.extend({
 
     routes: {
+        "": "home",
         "home": "home",
         "post": "post",
         "story": "story",
