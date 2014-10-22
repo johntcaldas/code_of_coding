@@ -47,6 +47,10 @@ window.COC.views.Post = Backbone.View.extend({
         var post_html = post_template(context);
         this.$el.html(post_html);
 
+        this.$el.find('pre code').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+
 
         // If a user is logged in, and there's a parent view to handle editing, show edit button.
         if (COC.session_token && this.parent_view) {
