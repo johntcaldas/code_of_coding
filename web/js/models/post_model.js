@@ -7,6 +7,7 @@ COC.models.Post = Backbone.Model.extend({
     defaults: {
         _id: null,
         title: null,
+        summary: null,
         html: null,
         tags: null,
         date: null

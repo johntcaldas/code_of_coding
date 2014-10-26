@@ -53,13 +53,14 @@ def add_post():
     app.logger.info("add_post() - {0}".format(post_data))
 
     title = post_data['title']
+    summary = post_data['summary']
     html = post_data['html']
     tags = post_data['tags']
     iso_date_string = post_data['date']
     date_object = dateutil.parser.parse(iso_date_string)
 
     blog_posts_service = BlogPostsService()
-    post_id = blog_posts_service.add_post(title, html, tags, date_object)
+    post_id = blog_posts_service.add_post(title, summary, html, tags, date_object)
 
     ret = {
         "success": True,
@@ -77,13 +78,14 @@ def update_post():
 
     post_id = post_data['_id']
     title = post_data['title']
+    summary = post_data['summary']
     html = post_data['html']
     tags = post_data['tags']
     iso_date_string = post_data['date']
     date_object = dateutil.parser.parse(iso_date_string)
 
     blog_posts_service = BlogPostsService()
-    post_id = blog_posts_service.update_post(post_id, title, html, tags, date_object)
+    post_id = blog_posts_service.update_post(post_id, title, summary, html, tags, date_object)
 
     ret = {
         "success": True,

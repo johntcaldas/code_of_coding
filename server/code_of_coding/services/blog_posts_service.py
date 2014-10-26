@@ -21,9 +21,10 @@ class BlogPostsService():
         posts_list = list(posts_cursor)
         return posts_list
 
-    def add_post(self, title, html, tags, date=datetime.utcnow()):
+    def add_post(self, title, summary, html, tags, date=datetime.utcnow()):
         post = {
             "title": title,
+            "summary": summary,
             "html": html,
             "tags": tags,
             "date": date
@@ -32,9 +33,10 @@ class BlogPostsService():
         app.logger.debug("Inserted new post with id={0}".format(blog_post_id))
         return blog_post_id
 
-    def update_post(self, post_id, title, html, tags, date):
+    def update_post(self, post_id, title, summary, html, tags, date):
         write_result = self.posts.update({"_id": ObjectId(post_id)}, {
             "title": title,
+            "summary": summary,
             "html": html,
             "tags": tags,
             "date": date

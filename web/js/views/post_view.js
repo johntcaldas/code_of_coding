@@ -39,7 +39,7 @@ window.COC.views.Post = Backbone.View.extend({
         // Render the post template.
         var context = {
             "title": post.get("title"),
-            "html": post.get("html"),
+            "html": post.get("summary"),
             "date": string_date,
             "object_id": post.get("_id")
         };

@@ -9,18 +9,21 @@ window.COC.views.PostEditor = Backbone.View.extend({
         "click #post_btn": "post_btn_click"
     },
 
-    EDITOR_HEIGHT: "800px",
+    SUMMARY_EDITOR_HEIGHT: "200px",
+    POST_EDITOR_HEIGHT: "800px",
 
     initialize: function () {
         this.render();
 
         // Initialize "instance" variables.
-        this.post = null;           // Backbone model instance for a post. Present in 'edit' mode.
-        this.editor_dom_id = null;  // The dom id of the editor text area to replace with a CKEditor.
-        this.edit_mode = false;     // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
+        this.post = null;                  // Backbone model instance for a post. Present in 'edit' mode.
+        this.summary_editor_dom_id = null; // The summary editor text area to replace with a CKEditor.
+        this.post_editor_dom_id = null;    // The post editor text area to replace with a CKEditor.
+        this.edit_mode = false;            // Will be set to true if we enter 'edit mode'. (eg. someone calls set_post).
 
         // Grab references to the elements we're going to be manipulating from this view.
         this.elements = {};
+        this.elements.summary_editor_text_area = this.$el.find('#summary_ckeditor');
         this.elements.post_editor_text_area = this.$el.find('#post_ckeditor');
         this.elements.date_picker_div = this.$el.find('#post_date_picker');
         this.elements.title_txt = this.$el.find('#title_txt');
@@ -29,10 +32,34 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.elements.alert_view = new COC.views.Alert({ el: this.$el.find('#post_blog_alert_attach_point') });
 
 
-        // Initialize CKEditor.
-        this.editor_dom_id = COC.util.uuid();
-        this.elements.post_editor_text_area.attr("id", this.editor_dom_id);
-        CKEDITOR.replace(this.editor_dom_id, { height: this.EDITOR_HEIGHT });
+        // Initialize CKEditor for the summary.
+        this.summary_editor_dom_id = COC.util.uuid();
+        this.elements.summary_editor_text_area.attr("id", this.summary_editor_dom_id);
+        CKEDITOR.replace(this.summary_editor_dom_id, {
+            height: this.SUMMARY_EDITOR_HEIGHT,
+            sharedSpaces: {
+                top: 'top_space',
+                bottom: 'bottom_space'
+            },
+
+            // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
+            removePlugins: 'maximize,resize'
+        });
+
+        // Initialize CKEditor for the post.
+        this.post_editor_dom_id = COC.util.uuid();
+        this.elements.post_editor_text_area.attr("id", this.post_editor_dom_id);
+        CKEDITOR.replace(this.post_editor_dom_id, {
+            height: this.POST_EDITOR_HEIGHT,
+            sharedSpaces :
+            {
+                top : 'top_space',
+                bottom : 'bottom_space'
+            },
+
+            // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
+            removePlugins : 'maximize,resize'
+        });
 
 
         // Initialize the date picker.
@@ -58,8 +85,11 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         this.edit_mode = true;
 
-        // Place the post html in the editor.
-        CKEDITOR.instances[this.editor_dom_id].setData(post.get('html'));
+        // Place the summary html its the editor.
+        CKEDITOR.instances[this.summary_editor_dom_id].setData(post.get('summary'));
+
+        // Place the post html in its editor.
+        CKEDITOR.instances[this.post_editor_dom_id].setData(post.get('html'));
 
         // Update fields.
         this.elements.title_txt.val(post.get('title'));
@@ -79,7 +109,13 @@ window.COC.views.PostEditor = Backbone.View.extend({
         event.preventDefault();
 
         // Validate input
-        var post_html = CKEDITOR.instances[this.editor_dom_id].getData();
+        var summary_html = CKEDITOR.instances[this.summary_editor_dom_id].getData();
+        if (!summary_html || summary_html == null || summary_html == "") {
+            this.elements.alert_view.show_alert('This post needs a summary!', 'alert-danger');
+            return
+        }
+
+        var post_html = CKEDITOR.instances[this.post_editor_dom_id].getData();
         if (!post_html || post_html == null || post_html == "") {
             this.elements.alert_view.show_alert('Write a post first!', 'alert-danger');
             return;
@@ -107,6 +143,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         this.post.set({
             "title": title,
+            "summary": summary_html,
             "html": post_html,
             "tags": tags,
             "date": iso_date_str
@@ -135,7 +172,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         this.elements.alert_view.show_alert('Post submitted!', 'alert-success');
 
-        CKEDITOR.instances[this.editor_dom_id].setData('Feel like writing something else?');
+        CKEDITOR.instances[this.summary_editor_dom_id].setData('Yet another summary.');
+        CKEDITOR.instances[this.post_editor_dom_id].setData('Feel like writing something else?');
         this.elements.tags_txt.val('');
         this.elements.title_txt.val('');
         this.edit_mode = false;
