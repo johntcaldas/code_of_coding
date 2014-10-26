@@ -7,25 +7,24 @@ $(document).ready(function() {
     COC.data.posts = new COC.models.PostCollection();
     COC.fetching_posts = true;
     COC.data.posts.fetch();
-    COC.data.posts.on('reset', function() {
+    COC.data.posts.on("reset", function() {
        COC.fetching_posts = false;
     });
-
-    // Check to see if we have a session token stored in a cookie. If so, auto-login.
-    var session_token = $.cookie('session_token');
-    if (session_token !== undefined) {
-        COC.session_token = session_token;
-        $('#post_blog_nav_li').removeClass('hidden');
-    }
 
     // Initialize the router.
     COC.router = new COC.Router();
 
     // Load up the mother of all views.
-    COC.views.body_container_view = new BodyContainer({el: $('#body_container_div')});
+    COC.views.body_container_view = new BodyContainer({el: $("#body_container_div")});
+
+    // Check to see if we have a session token stored in a cookie. If so, auto-login.
+    var session_token = $.cookie("session_token");
+    if (session_token !== undefined) {
+        COC.session_token = session_token;
+        $("#post_blog_nav_li").removeClass("hidden");
+    }
 
     Backbone.history.start({ pushState: true });
-    Backbone.history.navigate("", { trigger: true });
 
     // Intercept clicks on any anchor tags. If they aren't outgoing to other sites, preventDefault and navigate
     // without a page load. Code modeled after:

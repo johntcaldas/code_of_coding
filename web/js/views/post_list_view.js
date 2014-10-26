@@ -13,7 +13,7 @@ window.COC.views.PostList = Backbone.View.extend({
         }
 
         if(COC.fetching_posts) {
-            COC.data.posts.on('reset', this.set_post_model.bind(this));
+            COC.data.posts.on("reset", this.set_post_model.bind(this));
         }
         else {
             this.set_post_model();
@@ -32,8 +32,8 @@ window.COC.views.PostList = Backbone.View.extend({
         var posts = [];
         COC.data.posts.each(function (post) {
             var post_data = {};
-            post_data['title'] = post.get("title");
-            post_data['url'] = "posts/" +  COC.util.string_to_url_component(post.get("title"));
+            post_data["title"] = post.get("title");
+            post_data["url"] = "posts/" +  COC.util.string_to_url_component(post.get("title"));
             posts.push(post_data);
         });
 
@@ -47,9 +47,14 @@ window.COC.views.PostList = Backbone.View.extend({
         };
 
         // Render template.
-        var template = templates['handlebars/post_list.handlebars'];
+        var template = templates["handlebars/post_list.handlebars"];
         var post_list_html = template(context);
         this.$el.html(post_list_html);
+
+        // Highlight code blocks. Copied from post_view.js
+        this.$el.find("pre code").each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
     },
 
     set_post_model: function () {
@@ -69,7 +74,7 @@ window.COC.views.PostList = Backbone.View.extend({
         // If not, then check if we can grab a post by url formatted title.
         if (!post_model) {
             COC.data.posts.each(function (post) {
-                var title = post.get('title');
+                var title = post.get("title");
                 var url_title = COC.util.string_to_url_component(title);
 
                 if (url_title === this.id_or_title) {

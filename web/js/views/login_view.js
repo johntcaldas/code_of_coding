@@ -23,15 +23,15 @@ window.COC.views.Login = Backbone.View.extend({
         this.render();
 
         // Grab references to the elements we're going to be manipulating.
-        this.elements.login_modal = this.$el.find('#login_modal');
-        this.elements.username_txt = this.$el.find('#username_txt');
-        this.elements.password_txt = this.$el.find('#password_txt');
-        this.elements.login_btn = this.$el.find('#login_btn');
-        this.elements.post_blog_nav_li = $('#post_blog_nav_li');
-        this.elements.alert_view = new COC.views.Alert({el: this.$el.find('#login_alert_attach_point')});
+        this.elements.login_modal = this.$el.find("#login_modal");
+        this.elements.username_txt = this.$el.find("#username_txt");
+        this.elements.password_txt = this.$el.find("#password_txt");
+        this.elements.login_btn = this.$el.find("#login_btn");
+        this.elements.post_blog_nav_li = $("#post_blog_nav_li");
+        this.elements.alert_view = new COC.views.Alert({el: this.$el.find("#login_alert_attach_point")});
 
         // Focus the username field once the modal is showing.
-        this.elements.login_modal.on('shown.bs.modal', function () {
+        this.elements.login_modal.on("shown.bs.modal", function () {
             this.elements.username_txt.focus();
         }.bind( this ));
 
@@ -45,7 +45,7 @@ window.COC.views.Login = Backbone.View.extend({
     },
 
     render: function () {
-        var template = templates['handlebars/login.handlebars'];
+        var template = templates["handlebars/login.handlebars"];
         var html = template();
         this.$el.html(html);
     },
@@ -74,19 +74,19 @@ window.COC.views.Login = Backbone.View.extend({
         });
 
         // Set button to loading text
-        this.elements.login_btn.button('loading');
+        this.elements.login_btn.button("loading");
 
         var url = COC.server_url_root + "/authenticate/";
 
         $.ajax({
-            contentType: 'application/json',
+            contentType: "application/json",
             url: url,
             data: data,
             type: "POST",
             dataType: "json",
             success: this.handle_login_response.bind( this ),
             error: function() {
-                alert('error logging')
+                alert("error logging")
             }
         });
     },
@@ -95,7 +95,7 @@ window.COC.views.Login = Backbone.View.extend({
 
         // Reset button text
         setTimeout(function () {
-            this.elements.login_btn.button('reset');
+            this.elements.login_btn.button("reset");
         }.bind(this), 300);
 
         if(!data.success) {
@@ -112,13 +112,13 @@ window.COC.views.Login = Backbone.View.extend({
         }
 
         // Set cookie with the session token. It will expire at the same time the token expires on the server, using
-        // the 'expires' we get from the server. Note: not sure what timezone implications are here.
+        // the "expires" we get from the server. Note: not sure what timezone implications are here.
         var expires_iso8601_string = data.expires;
-        $.cookie('session_token', token, { expires: new Date(expires_iso8601_string) });
+        $.cookie("session_token", token, { expires: new Date(expires_iso8601_string) });
 
         // "Log in". Note: Some code duped in main.js. Could common "login" functionality that doesn't live in a view.
         COC.session_token = token;
-        this.elements.login_modal.modal('hide');
-        this.elements.post_blog_nav_li.removeClass('hidden');
+        this.elements.login_modal.modal("hide");
+        this.elements.post_blog_nav_li.removeClass("hidden");
     }
 });

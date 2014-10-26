@@ -19,13 +19,13 @@ window.COC.views.Story = Backbone.View.extend({
 
         // Initialize the post editor modal. Doing this after render because it is hidden when initialized.
         // 1.) Render the modal.
-        var modal_template = templates['handlebars/modal.handlebars'];
+        var modal_template = templates["handlebars/modal.handlebars"];
         var html = modal_template();
-        this.elements.edit_post_modal = $('<div/>').html(html).contents();
+        this.elements.edit_post_modal = $("<div/>").html(html).contents();
         this.$el.append(this.elements.edit_post_modal);
 
         // 2.) Create a new editor and place it in the modal.
-        var modal_body = this.elements.edit_post_modal.find('.modal-body');
+        var modal_body = this.elements.edit_post_modal.find(".modal-body");
         this.elements.editor_view = new COC.views.PostEditor({el: modal_body});
 
         // Set up listeners for change events
@@ -35,12 +35,12 @@ window.COC.views.Story = Backbone.View.extend({
     render: function () {
 
         // Render the story container.
-        var template = templates['handlebars/story.handlebars'];
+        var template = templates["handlebars/story.handlebars"];
         var story_html = template();
         this.$el.html(story_html);
 
         if(COC.fetching_posts) {
-            COC.data.posts.on('reset', this.load_posts.bind(this));
+            COC.data.posts.on("reset", this.load_posts.bind(this));
         }
         else {
             this.load_posts();
@@ -61,7 +61,7 @@ window.COC.views.Story = Backbone.View.extend({
         }.bind(this));
 
         // After rendering all the stories, place our document fragment in the DOM attach point.
-        this.elements.post_attach_point_div = this.$el.find('#story_posts_attach_point');
+        this.elements.post_attach_point_div = this.$el.find("#story_posts_attach_point");
         this.elements.post_attach_point_div.append(document_fragment);
     },
 

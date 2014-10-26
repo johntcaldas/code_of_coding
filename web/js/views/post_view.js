@@ -2,7 +2,7 @@
 //
 // model : This view assumes it is being initialized with a model.
 //
-// Provides an 'edit' button. Edit functionality remains the responsibility of the parent view.
+// Provides an "edit" button. Edit functionality remains the responsibility of the parent view.
 // A parent view must implement a "edit_post" method.
 // Set parent by passing an "options" parameter to initialize. (eg.
 // options: {
@@ -13,7 +13,7 @@
 
 window.COC.views.Post = Backbone.View.extend({
 
-    tagName: 'div',
+    tagName: "div",
     log_tag: "post_view",
 
     events: {
@@ -43,11 +43,11 @@ window.COC.views.Post = Backbone.View.extend({
             "date": string_date,
             "object_id": post.get("_id")
         };
-        var post_template = templates['handlebars/post.handlebars'];
+        var post_template = templates["handlebars/post.handlebars"];
         var post_html = post_template(context);
         this.$el.html(post_html);
 
-        this.$el.find('pre code').each(function (i, block) {
+        this.$el.find("pre code").each(function (i, block) {
             hljs.highlightBlock(block);
         });
 
@@ -55,7 +55,7 @@ window.COC.views.Post = Backbone.View.extend({
         // If a user is logged in, and there's a parent view to handle editing, show edit button.
         if (COC.session_token && this.parent_view) {
 
-            var edit_btn = this.$el.find('#edit_btn');
+            var edit_btn = this.$el.find("#edit_btn");
             edit_btn.removeClass("hidden");
 
             edit_btn.click(function (event) {
