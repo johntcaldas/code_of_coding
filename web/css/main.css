@@ -1,5 +1,7 @@
 /* Makes the date picker visible when used in a bootstrap modal */
-.datepicker{z-index:1151 !important;}
+.datepicker {z-index:1151 !important; }
+
+.clickable { cursor: pointer; }
 
 /* Used in body_container */
 #top_level_content {

@@ -42,7 +42,6 @@ window.COC.views.PostList = Backbone.View.extend({
             "title": post.get("title"),
             "html": post.get("summary") + post.get("html"),
             "date": string_date,
-            "object_id": post.get("_id"),
             "post_list": posts
         };
 
