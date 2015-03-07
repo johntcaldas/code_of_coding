@@ -13,6 +13,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
     POST_EDITOR_HEIGHT: "800px",
 
     initialize: function () {
+
         this.render();
 
         // Initialize "instance" variables.

@@ -4,16 +4,19 @@ window.COC.views.Story = Backbone.View.extend({
 
     log_tag: "story_view",
 
-    elements: {
-        edit_post_modal: null,
-        editor_view: null,
-        post_attach_point_div: null
-    },
-
-    // Array of subviews for individual posts.
-    post_views: [],
 
     initialize: function () {
+
+        // Initialize "instance" variables.
+        this.elements = {
+            edit_post_modal: null,
+                editor_view: null,
+                post_attach_point_div: null
+        };
+
+        // Array of subviews for individual posts.
+        this.post_views = [];
+
 
         this.render();
 
@@ -77,7 +80,7 @@ window.COC.views.Story = Backbone.View.extend({
     },
 
     create_post_view: function (post) {
-        var post_view = new COC.views.Post({ model: post, parent: this});
+        var post_view = new COC.views.Post({ model: post, parent: this, summary_view: true});
         this.post_views.push(post_view);
         return post_view;
     }

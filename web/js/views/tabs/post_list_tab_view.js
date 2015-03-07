@@ -5,7 +5,10 @@ window.COC.views.PostList = Backbone.View.extend({
     log_tag: "post_list_view",
 
     initialize: function (options) {
+
+        // Initialize "instance" variables.
         this.id_or_title = options.id_or_title;
+        this.post_view = null;
 
         if(COC.fetching_posts) {
             COC.data.posts.on("reset", this.set_post_model.bind(this));
@@ -45,10 +48,9 @@ window.COC.views.PostList = Backbone.View.extend({
         var post_list_html = template(context);
         this.$el.html(post_list_html);
 
-        // Highlight code blocks. Copied from post_view.js
-        this.$el.find("pre code").each(function (i, block) {
-            hljs.highlightBlock(block);
-        });
+        // Create a post view and inject it into the template.
+        this.post_view = new COC.views.Post({ model: post, parent: this, summary_view: false});
+        this.$el.find("#post_view_attach_point").append(this.post_view.$el);
     },
 
     set_post_model: function () {

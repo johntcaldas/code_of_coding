@@ -6,8 +6,13 @@
 // A parent view must implement a "edit_post" method.
 // Set parent by passing an "options" parameter to initialize. (eg.
 // options: {
-//     parent:     An object (presumably a parent view) that implements post editing functionality.
+//     parent:           An object (presumably a parent view) that implements post editing functionality.
+//     summary_view:     [optional, defaults to false] Show only the summary. Title is clickable.
+//                       There is also a "Read more" button.
 // }
+//
+// Example instantiation:
+// var post_view = new COC.views.Post({ model: post, parent: this, summary_view: true});
 
 "use strict";
 
@@ -23,7 +28,9 @@ window.COC.views.Post = Backbone.View.extend({
 
     initialize: function (options) {
 
+        // Initialize "instance" variables.
         this.parent_view = options.parent;
+        this.is_summary_view = options.summary_view ? options.summary_view : false;
 
         this.render();
         this.listenTo(this.model, "change", this.render);
@@ -36,16 +43,29 @@ window.COC.views.Post = Backbone.View.extend({
         var moment_date = COC.util.moment_date_from_iso_string(post.get("date"));
         var string_date = moment_date.format("dddd, MMMM Do YYYY");
 
+        // Set html (summary vs. non-summary)
+        var html = this.is_summary_view ? post.get("summary") : post.get("summary") + post.get("html");
+
         // Render the post template.
         var context = {
             "title": post.get("title"),
-            "html": post.get("summary"),
+            "html": html,
             "date": string_date
         };
         var post_template = templates["handlebars/post.handlebars"];
         var post_html = post_template(context);
         this.$el.html(post_html);
 
+        // In summary mode :
+        //  + Make the "Read more" button visible.
+        //  + Make the title bar clickable.
+        if(this.is_summary_view) {
+            this.$el.find("#read_more_btn").removeClass("hidden");
+            this.$el.find("#title").addClass("clickable");
+        }
+
+
+        // Apply code syntax highlighting. This makes code snippets pretty.
         this.$el.find("pre code").each(function (i, block) {
             hljs.highlightBlock(block);
         });
