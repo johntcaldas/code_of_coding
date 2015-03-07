@@ -13,7 +13,9 @@
                 <li>
                     <a data-target="#story" data-toggle="tab" role="tab">Story</a>
                 </li>
-                <!--<li><a href="blog" role="tab">Blog</a></li>-->
+                <li>
+                    <a data-target="#posts" data-toggle="tab" role="tab">List</a>
+                </li>
                 <li id="post_blog_nav_li" class="hidden">
                     <a data-target="#post" data-toggle="tab" role="tab">Post</a>
                 </li>
@@ -26,11 +28,10 @@
 <div id="top_level_content" class="tab-content">
     <div id="home" class="tab-pane fade">{{>handlebars/home.handlebars}}</div>
     <div id="story" class="tab-pane fade"><!-- I'm loaded at runtime --></div>
+    <div id="posts" class="tab-pane fade"><!-- I'm loaded at runtime --></div>
     <div id="post" class="tab-pane fade"><!-- I'm loaded at runtime --></div>
 </div>
 
 <!-- Login Modal Attach Point -->
 <div id="login"></div>
 
-<!-- View Post Attach Point -->
-<div id="view_post_attach_point"></div>

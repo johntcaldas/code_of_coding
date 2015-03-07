@@ -7,11 +7,6 @@ window.COC.views.PostList = Backbone.View.extend({
     initialize: function (options) {
         this.id_or_title = options.id_or_title;
 
-        if(!this.id_or_title) {
-            COC.log.error(this.log_tag + " No id or title.");
-            return;
-        }
-
         if(COC.fetching_posts) {
             COC.data.posts.on("reset", this.set_post_model.bind(this));
         }
@@ -67,7 +62,7 @@ window.COC.views.PostList = Backbone.View.extend({
     },
 
     get_post_by_id_or_title: function () {
-        // Check heck to see if we got a post id.
+        // Check to see if we got a post id.
         var post_model = COC.data.posts.get(this.id_or_title);
 
         // If not, then check if we can grab a post by url formatted title.
@@ -80,6 +75,13 @@ window.COC.views.PostList = Backbone.View.extend({
                     post_model = post;
                 }
             }.bind(this));
+        }
+
+        // If we didn't get an id or a title, then see if we have any posts at all.
+        if (!post_model) {
+            if(Object.keys(COC.data.posts.models).length > 0) {
+                post_model = COC.data.posts.models[0];
+            }
         }
 
         // This method returns undefined if no posts preset.

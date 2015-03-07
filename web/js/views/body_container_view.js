@@ -31,19 +31,10 @@ var BodyContainer = Backbone.View.extend({
         $(document.body).keyup(handle_key_presses_for_login);
 
 
+        // List on the top-level "tab" routes.
         COC.router.on("route:home", function () {
             this.$el.find("#view_post_attach_point").addClass("hidden");
             $("a[data-target='#home']").tab("show");
-        }.bind(this));
-
-        COC.router.on("route:post", function () {
-            if (COC.views.post_view === undefined) {
-                COC.log.info(this.log_tag + " Loading post view ...");
-                COC.views.post_view = new COC.views.PostBlog({el: this.$el.find("#post")});
-            }
-
-            this.$el.find("#view_post_attach_point").addClass("hidden");
-            $("a[data-target='#post']").tab("show");
         }.bind(this));
 
         COC.router.on("route:story", function () {
@@ -56,27 +47,32 @@ var BodyContainer = Backbone.View.extend({
             $("a[data-target='#story']").tab("show");
         }.bind(this));
 
+        COC.router.on("route:post", function () {
+            if (COC.views.post_view === undefined) {
+                COC.log.info(this.log_tag + " Loading post a blog view ...");
+                COC.views.post_view = new COC.views.PostBlog({el: this.$el.find("#post")});
+            }
+
+            this.$el.find("#view_post_attach_point").addClass("hidden");
+            $("a[data-target='#post']").tab("show");
+        }.bind(this));
+
+
+        // Listen on all routes, /posts ("List" tab), /posts/<post_id> or /posts/<title>
         COC.router.on("route:posts", function (id_or_title) {
 
             if (COC.views.view_post === undefined) {
-                COC.log.info(this.log_tag + " Loading post view ...");
+                COC.log.info(this.log_tag + " Loading post list view ...");
                 COC.views.view_post = new COC.views.PostList({
-                    el: this.$el.find("#view_post_attach_point"),
+                    el:this.$el.find("#posts"),
                     id_or_title: id_or_title
                 });
             }
-            else {
+            else if(id_or_title) {
                 COC.views.view_post.set_id_or_title(id_or_title);
             }
 
-            // Deselect all tabs.
-            var nav_bar_items = this.$el.find("li");
-            nav_bar_items.removeClass("active");
-            var tab_pane_divs = this.$el.find(".tab-pane");
-            tab_pane_divs.removeClass("active");
-
-            // Show the post list.
-            this.$el.find("#view_post_attach_point").removeClass("hidden");
+            $("a[data-target='#posts']").tab("show");
         }.bind(this));
     },
 
