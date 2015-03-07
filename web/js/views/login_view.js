@@ -9,26 +9,19 @@ window.COC.views.Login = Backbone.View.extend({
       "click #login_btn": "login_btn_click"
     },
 
-    // The list of elements we'll be manipulating from this view.
-    elements: {
-        login_modal: null,
-        username_txt: null,
-        password_txt: null,
-        login_btn: null,
-        post_blog_nav_li: null,
-        alert_view: null
-    },
-
     initialize: function () {
         this.render();
 
         // Grab references to the elements we're going to be manipulating.
-        this.elements.login_modal = this.$el.find("#login_modal");
-        this.elements.username_txt = this.$el.find("#username_txt");
-        this.elements.password_txt = this.$el.find("#password_txt");
-        this.elements.login_btn = this.$el.find("#login_btn");
-        this.elements.post_blog_nav_li = $("#post_blog_nav_li");
-        this.elements.alert_view = new COC.views.Alert({el: this.$el.find("#login_alert_attach_point")});
+        this.elements = {
+            login_modal : this.$el.find("#login_modal"),
+            username_txt : this.$el.find("#username_txt"),
+            password_txt : this.$el.find("#password_txt"),
+            login_btn : this.$el.find("#login_btn"),
+            post_blog_nav_li : $("#post_blog_nav_li"),
+            alert_view : new COC.views.Alert({el: this.$el.find("#login_alert_attach_point")})
+        };
+
 
         // Focus the username field once the modal is showing.
         this.elements.login_modal.on("shown.bs.modal", function () {

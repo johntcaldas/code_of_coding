@@ -22,14 +22,15 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.edit_mode = false;            // Will be set to true if we enter "edit mode". (eg. someone calls set_post).
 
         // Grab references to the elements we're going to be manipulating from this view.
-        this.elements = {};
-        this.elements.summary_editor_text_area = this.$el.find("#summary_ckeditor");
-        this.elements.post_editor_text_area = this.$el.find("#post_ckeditor");
-        this.elements.date_picker_div = this.$el.find("#post_date_picker");
-        this.elements.title_txt = this.$el.find("#title_txt");
-        this.elements.tags_txt = this.$el.find("#tags_txt");
-        this.elements.post_btn = this.$el.find("#post_btn");
-        this.elements.alert_view = new COC.views.Alert({ el: this.$el.find("#post_blog_alert_attach_point") });
+        this.elements = {
+            summary_editor_text_area : this.$el.find("#summary_ckeditor"),
+            post_editor_text_area : this.$el.find("#post_ckeditor"),
+            date_picker_div : this.$el.find("#post_date_picker"),
+            title_txt : this.$el.find("#title_txt"),
+            tags_txt : this.$el.find("#tags_txt"),
+            post_btn : this.$el.find("#post_btn"),
+            alert_view : new COC.views.Alert({ el: this.$el.find("#post_blog_alert_attach_point") })
+        };
 
 
         // Initialize CKEditor for the summary.
