@@ -33,7 +33,6 @@ var BodyContainer = Backbone.View.extend({
 
         // List on the top-level "tab" routes.
         COC.router.on("route:home", function () {
-            this.$el.find("#view_post_attach_point").addClass("hidden");
             $("a[data-target='#home']").tab("show");
         }.bind(this));
 
@@ -43,7 +42,6 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.story_view = new COC.views.Story({el: this.$el.find("#story")});
             }
 
-            this.$el.find("#view_post_attach_point").addClass("hidden");
             $("a[data-target='#story']").tab("show");
         }.bind(this));
 
@@ -53,7 +51,6 @@ var BodyContainer = Backbone.View.extend({
                 COC.views.post_view = new COC.views.PostBlog({el: this.$el.find("#post")});
             }
 
-            this.$el.find("#view_post_attach_point").addClass("hidden");
             $("a[data-target='#post']").tab("show");
         }.bind(this));
 
