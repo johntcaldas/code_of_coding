@@ -20,6 +20,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.post = null;                  // Backbone model instance for a post. Present in "edit" mode.
         this.summary_editor_dom_id = null; // The summary editor text area to replace with a CKEditor.
         this.post_editor_dom_id = null;    // The post editor text area to replace with a CKEditor.
+        this.top_space_dom_id = null;      // The "top space" of the CKEditor (toolbar).
+        this.bottom_space_dom_id = null;   // The "bottom space" of the CKEditor (footer).
         this.edit_mode = false;            // Will be set to true if we enter "edit mode". (eg. someone calls set_post).
 
         // Grab references to the elements we're going to be manipulating from this view.
@@ -30,18 +32,25 @@ window.COC.views.PostEditor = Backbone.View.extend({
             title_txt : this.$el.find("#title_txt"),
             tags_txt : this.$el.find("#tags_txt"),
             post_btn : this.$el.find("#post_btn"),
+            top_space_div : this.$el.find("#top_space"),
+            bottom_space_div : this.$el.find("#bottom_space"),
             alert_view : new COC.views.Alert({ el: this.$el.find("#post_blog_alert_attach_point") })
         };
 
+        // Make the top and bottom space ids unique (to support multiple editors)
+        this.top_space_dom_id = COC.util.uuid();
+        this.elements.top_space_div.attr("id", this.top_space_dom_id);
+        this.bottom_space_dom_id = COC.util.uuid();
+        this.elements.bottom_space_div.attr("id", this.bottom_space_dom_id);
 
-        // Initialize CKEditor for the summary.
+            // Initialize CKEditor for the summary.
         this.summary_editor_dom_id = COC.util.uuid();
         this.elements.summary_editor_text_area.attr("id", this.summary_editor_dom_id);
         CKEDITOR.replace(this.summary_editor_dom_id, {
             height: this.SUMMARY_EDITOR_HEIGHT,
             sharedSpaces: {
-                top: "top_space",
-                bottom: "bottom_space"
+                top : this.top_space_dom_id,
+                bottom : this.bottom_space_dom_id
             },
 
             // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
@@ -55,8 +64,8 @@ window.COC.views.PostEditor = Backbone.View.extend({
             height: this.POST_EDITOR_HEIGHT,
             sharedSpaces :
             {
-                top : "top_space",
-                bottom : "bottom_space"
+                top : this.top_space_dom_id,
+                bottom : this.bottom_space_dom_id
             },
 
             // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
