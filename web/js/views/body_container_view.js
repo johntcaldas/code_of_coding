@@ -1,6 +1,6 @@
 "use strict";
 
-/* Contains the topest level navigation elements (eg. home, story, login, about, contact etc) */
+/* Contains the topest level navigation elements (eg. welcome, story, login, about, contact etc) */
 var BodyContainer = Backbone.View.extend({
 
     log_tag: "body_container_view",
@@ -32,8 +32,8 @@ var BodyContainer = Backbone.View.extend({
 
 
         // List on the top-level "tab" routes.
-        COC.router.on("route:home", function () {
-            $("a[data-target='#home']").tab("show");
+        COC.router.on("route:welcome", function () {
+            $("a[data-target='#welcome']").tab("show");
         }.bind(this));
 
         COC.router.on("route:story", function () {
