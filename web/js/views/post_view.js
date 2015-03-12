@@ -78,8 +78,8 @@ window.COC.views.Post = Backbone.View.extend({
             edit_btn.removeClass("hidden");
 
             edit_btn.click(function (event) {
-                // Get post data to pass to editor.
-                this.parent_view.edit_post(this.model);
+                // Rely on the body container view to maintain a single edit post modal for the whole application.
+                COC.views.body_container_view.edit_post(post);
             }.bind(this));
         }
     },

@@ -15,7 +15,7 @@ $(document).ready(function() {
     COC.router = new COC.Router();
 
     // Load up the mother of all views.
-    COC.views.body_container_view = new BodyContainer({el: $("#body_container_div")});
+    COC.views.body_container_view = new COC.views.BodyContainer({el: $("#body_container_div")});
 
     // Check to see if we have a session token stored in a cookie. If so, auto-login.
     var session_token = $.cookie("session_token");
