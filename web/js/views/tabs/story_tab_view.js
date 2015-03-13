@@ -25,7 +25,7 @@ window.COC.views.Story = Backbone.View.extend({
     render: function () {
 
         // Render the story container.
-        var template = templates["handlebars/story.handlebars"];
+        var template = templates["handlebars/tabs/story.handlebars"];
         var story_html = template();
         this.$el.html(story_html);
 

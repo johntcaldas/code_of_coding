@@ -48,7 +48,7 @@ window.COC.views.PostList = Backbone.View.extend({
         };
 
         // Render template.
-        var template = templates["handlebars/post_list.handlebars"];
+        var template = templates["handlebars/tabs/post_list.handlebars"];
         var post_list_html = template(context);
         this.$el.html(post_list_html);
 

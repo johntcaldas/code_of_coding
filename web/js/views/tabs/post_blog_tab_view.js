@@ -11,7 +11,7 @@ window.COC.views.PostBlog = Backbone.View.extend({
     render: function () {
 
         // Render template html and place on page.
-        var template = templates["handlebars/post_blog.handlebars"];
+        var template = templates["handlebars/tabs/post_blog.handlebars"];
         var html = template();
         this.$el.html(html);
 

@@ -43,6 +43,11 @@ COC.views.BodyContainer = Backbone.View.extend({
     bindRouterEventsToTabViews: function () {
         // List on the top-level "tab" routes.
         COC.router.on("route:welcome", function () {
+            if (COC.views.welcome_view === undefined) {
+                COC.log.info(this.log_tag + " Loading welcome view ...");
+                COC.views.welcome_view = new COC.views.Welcome({el: this.$el.find("#welcome")});
+            }
+
             $("a[data-target='#welcome']").tab("show");
         }.bind(this));
 

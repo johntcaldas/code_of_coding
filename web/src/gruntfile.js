@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg : grunt.file.readJSON('package.json'),
         dirs: {
-          handlebars_src: 'handlebars/*.handlebars',
+          handlebars_src: 'handlebars/**/*.handlebars',
           handlebars_dest: '../js/handlebars_templates.js',
           js: '../js/**/*.js'
         },
