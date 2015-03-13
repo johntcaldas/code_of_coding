@@ -10,6 +10,10 @@ window.COC.views.PostList = Backbone.View.extend({
         this.id_or_title = options.id_or_title;
         this.post_view = null;
 
+        // Set up listeners for change events
+        // Note: set_post_model() figures out which post to show in full, and re-renders the whole page.
+        this.listenTo(COC.data.posts, "add",  this.set_post_model.bind(this));
+
         if(COC.fetching_posts) {
             COC.data.posts.on("reset", this.set_post_model.bind(this));
         }

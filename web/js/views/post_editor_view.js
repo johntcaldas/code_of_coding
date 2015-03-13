@@ -54,7 +54,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             },
 
             // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
-            removePlugins: "maximize,resize"
+            removePlugins: "resize"
         });
 
         // Initialize CKEditor for the post.
@@ -69,7 +69,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             },
 
             // Removes the maximize and resize plugins because they are not usable in a shared toolbar.
-            removePlugins : "maximize,resize"
+            removePlugins : "resize"
         });
 
 
