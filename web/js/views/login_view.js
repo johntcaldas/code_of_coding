@@ -26,15 +26,15 @@ window.COC.views.Login = Backbone.View.extend({
         // Focus the username field once the modal is showing.
         this.elements.login_modal.on("shown.bs.modal", function () {
             this.elements.username_txt.focus();
-        }.bind( this ));
+        }.bind(this));
 
         // Enter key submits after typing in the password.
         this.elements.password_txt.keypress(function(e) {
-            if(e.which == 13) {
+            if (e.which == 13) {
                 // enter pressed
                 this.login_btn_click();
             }
-        }.bind( this ));
+        }.bind(this));
     },
 
     render: function () {
@@ -47,16 +47,16 @@ window.COC.views.Login = Backbone.View.extend({
         this.elements.login_modal.modal();
     },
 
-    login_btn_click: function() {
+    login_btn_click: function () {
         // Validate input
         var username = this.elements.username_txt.val();
-        if(!username || username == null || username == "") {
+        if (!username || username == null || username == "") {
             this.elements.alert_view.show_alert("Please enter a username.", "alert-danger");
             return;
         }
 
         var password = this.elements.password_txt.val();
-        if(!password || password == null || password == "") {
+        if (!password || password == null || password == "") {
             this.elements.alert_view.show_alert("Please enter a password.", "alert-danger");
             return;
         }
@@ -77,21 +77,21 @@ window.COC.views.Login = Backbone.View.extend({
             data: data,
             type: "POST",
             dataType: "json",
-            success: this.handle_login_response.bind( this ),
+            success: this.handle_login_response.bind(this),
             error: function() {
-                alert("error logging")
+                alert("error logging");
             }
         });
     },
 
-    handle_login_response: function(data, textStatus, jqXHR) {
+    handle_login_response: function (data, textStatus, jqXHR) {
 
         // Reset button text
         setTimeout(function () {
             this.elements.login_btn.button("reset");
         }.bind(this), 300);
 
-        if(!data.success) {
+        if (!data.success) {
             COC.log.error(this.log_tag + " Login unsuccessful.");
             this.elements.alert_view.show_alert("Login unsuccessful.", "alert-danger");
             return;

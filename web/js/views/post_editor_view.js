@@ -119,7 +119,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
 
         event.preventDefault();
 
-        // Validate input
+        // Validate input.
         var summary_html = CKEDITOR.instances[this.summary_editor_dom_id].getData();
         if (!summary_html || summary_html == null || summary_html == "") {
             this.elements.alert_view.show_alert("This post needs a summary!", "alert-danger");
@@ -143,6 +143,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             this.elements.alert_view.show_alert("You might want to come up with some tags!", "alert-danger");
             return;
         }
+
 
         var date = this.elements.date_picker_div.datepicker("getDate");
         var iso_date_str = date.toISOString();
@@ -170,7 +171,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             COC.data.posts.add(this.post);
         }
 
-        // Set button to loading text
+        // Set button to loading text.
         this.elements.post_btn.button("loading");
     },
 
