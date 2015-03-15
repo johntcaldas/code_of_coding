@@ -22,7 +22,7 @@ class COCException(Exception):
         dict = {
             "success": False,
             "message": self.user_message,
-            "error_guid": self.guid
+            "error_guid": str(self.guid)
         }
         return dict
 
