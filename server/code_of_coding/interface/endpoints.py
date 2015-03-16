@@ -2,6 +2,7 @@ from flask import request
 import dateutil.parser
 
 from code_of_coding import app
+from code_of_coding.services.content_service import ContentService
 from code_of_coding.services.blog_posts_service import BlogPostsService
 from code_of_coding.services import client_logging_service
 from code_of_coding.services import authentication_service
@@ -27,6 +28,39 @@ def authenticate():
             "token": session['token'],
             "expires": session['expires']
         }
+
+    return jsonify(ret)
+
+
+@app.route("/content/<content_id>", methods=['GET'])
+def get_content(content_id):
+    app.logger.info("get_content() - content_id={0}".format(content_id))
+
+    content_service = ContentService()
+    content = content_service.get_content(content_id)
+
+    ret = {
+        "success": True,
+        "html": content['html']
+    }
+
+    return jsonify(ret)
+
+
+@app.route("/content/<content_id>", methods=['PUT'])
+@auth
+def update_content(content_id):
+    content_data = request.get_json()
+    app.logger.info("update_content() - content_id={0}, data={1}".format(content_id, content_data))
+
+    html = content_data['html']
+
+    content_service = ContentService()
+    success = content_service.update_content(content_id, html)
+
+    ret = {
+        "success": success
+    }
 
     return jsonify(ret)
 

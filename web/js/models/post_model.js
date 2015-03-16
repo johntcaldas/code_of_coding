@@ -19,7 +19,7 @@ COC.models.Post = Backbone.Model.extend({
     // See http://stackoverflow.com/questions/7644767/backbone-js-use-different-urls-for-model-save-and-fetch
     // (Ted's answer)
     save: function(attributes, options) {
-        var url = COC.server_url_root + "/posts/"; //this._id ? "/posts/" : "/posts/" + this._id;
+        var url = COC.server_url_root + "/posts/";
         options = _.defaults((options || {}),
             {
                 url: url,
