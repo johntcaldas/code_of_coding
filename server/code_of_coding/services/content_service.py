@@ -14,6 +14,11 @@ class ContentService():
         db = database.get_db()
         self.content = db.content
 
+    def get_content_list(self):
+        content_list_cursor = self.content.find()
+        content_list = list(content_list_cursor)
+        return content_list
+
     def get_content(self, content_id):
         content = self.content.find_one({"content_id": content_id})
         return content

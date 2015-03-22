@@ -32,6 +32,21 @@ def authenticate():
     return jsonify(ret)
 
 
+@app.route("/content/", methods=['GET'])
+def get_content_list():
+    app.logger.info("get_content_list()")
+
+    content_service = ContentService()
+    content_list = content_service.get_content_list()
+
+    ret = {
+        "success": True,
+        "content": content_list
+    }
+
+    return jsonify(ret)
+
+
 @app.route("/content/<content_id>", methods=['GET'])
 def get_content(content_id):
     app.logger.info("get_content() - content_id={0}".format(content_id))
@@ -131,7 +146,6 @@ def update_post():
 
 @app.route("/log_client_message/", methods=['POST'])
 def log_client_message():
-
     log_message = request.get_json()
     message = log_message['message']
     level = log_message['level']

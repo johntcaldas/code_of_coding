@@ -20,9 +20,11 @@
         // If authenticated, will contain a session token.
         session_token: null,
 
-        // Will be set to true if still fetching posts from the server. Useful in post_list_view and post_view. They
-        // can bind on the collection reset event and set up a callback to render the content once it is ready.
-        fetching_posts: false
+        // Fetching Flags
+        // Will be set to true if still fetching from the server.
+        // They can bind on the collection reset event and set up a callback to render the content once it is ready.
+        fetching_posts: false,   // Useful in post_list_view and post_view.
+        fetching_content: false  // Useful everywhere.
     };
 
     //************************************************

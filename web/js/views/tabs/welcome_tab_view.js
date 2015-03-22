@@ -3,6 +3,7 @@
 window.COC.views.Welcome = Backbone.View.extend({
 
     log_tag: "welcome_view",
+    content_id: "welcome_tab",
 
 
     initialize: function () {
@@ -10,7 +11,7 @@ window.COC.views.Welcome = Backbone.View.extend({
         // Initialize "instance" variables.
         this.welcome_tab_div_dom_id = "welcome_tab_content";
         this.inline_ckeditor = null;
-        this.content_url = COC.server_url_root + "/content/welcome_tab";
+        this.content_url = COC.server_url_root + "/content/" + this.content_id;
 
         this.render();
 
@@ -20,7 +21,12 @@ window.COC.views.Welcome = Backbone.View.extend({
         };
 
         // Load content for this tab from the server.
-        this.get_tab_content_from_server();
+        if(COC.fetching_content) {
+            COC.data.content.on("reset", this.set_content_model.bind(this));
+        }
+        else {
+            this.set_content_model();
+        }
     },
 
     render: function () {
@@ -30,20 +36,10 @@ window.COC.views.Welcome = Backbone.View.extend({
         this.$el.html(welcome_html);
     },
 
-    get_tab_content_from_server: function () {
-        $.ajax({
-            contentType: "application/json",
-            url: this.content_url,
-            type: "GET",
-            dataType: "json",
-            success: function(data, textStatus, jqXHR) {
-                this.elements.welcome_tab_div.html(data["html"]);
-                this.enable_edit_mode();
-            }.bind(this),
-            error: function() {
-                alert("error saving to server");
-            }
-        });
+    set_content_model: function () {
+        this.model = COC.data.content.get(this.content_id);
+        this.elements.welcome_tab_div.html(this.model.get("html"));
+        this.enable_edit_mode();
     },
 
     enable_edit_mode: function () {
@@ -54,7 +50,7 @@ window.COC.views.Welcome = Backbone.View.extend({
         }
 
         // This property tells CKEditor to not activate every element with contenteditable=true element.
-        // TODO: this sucker probably belongs at a more global level (body_container/main/global/etc) than in this view
+        // TODO: this probably belongs at a more global level (body_container/main/global/etc) than in this view
         CKEDITOR.disableAutoInline = true;
 
         // Creating an inline editor using the example on this page:
@@ -92,11 +88,8 @@ window.COC.views.Welcome = Backbone.View.extend({
 
     handle_save_response: function (data, textStatus, jqXHR) {
         // TODO: provide some sort of visual feedback to the user.
-
         if (data['success'] == false) {
             alert("save to server unsuccessful");
         }
-
-        return;
     }
 });

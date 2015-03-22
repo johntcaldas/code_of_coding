@@ -11,6 +11,14 @@ $(document).ready(function() {
        COC.fetching_posts = false;
     });
 
+    // Initialize content collection.
+    COC.data.content = new COC.models.ContentCollection();
+    COC.fetching_content = true;
+    COC.data.content.fetch();
+    COC.data.content.on("reset", function() {
+        COC.fetching_content = false;
+    });
+
     // Initialize the router.
     COC.router = new COC.Router();
 
