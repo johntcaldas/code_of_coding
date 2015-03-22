@@ -15,6 +15,7 @@ window.COC.views.Welcome = Backbone.View.extend({
 
         this.render();
 
+
         // Grab references to the elements we're going to be manipulating.
         this.elements = {
             welcome_tab_div : this.$el.find("#" + this.welcome_tab_div_dom_id)

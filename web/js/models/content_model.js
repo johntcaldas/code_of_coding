@@ -16,7 +16,6 @@ COC.models.Content = Backbone.Model.extend({
     // Override backbone's "save" because we want to be able to run cross-domain.
     // See http://stackoverflow.com/questions/7644767/backbone-js-use-different-urls-for-model-save-and-fetch
     // (Ted's answer)
-    // TODO: Factor out the save function that is duplicated in post_model
     save: function(attributes, options) {
         var url = COC.server_url_root + "/content/";
         options = _.defaults((options || {}),
@@ -30,7 +29,6 @@ COC.models.Content = Backbone.Model.extend({
 
     url : function() {
         // In this case, POST to "/content" and PUT to "/content/<content_id>"
-        // TODO: duplicated in post model.
         var the_url = this._id === undefined ? "/content/" : "/content/" + this.content_id;
         return the_url;
     }
