@@ -28,8 +28,9 @@ COC.models.Content = Backbone.Model.extend({
     },
 
     url : function() {
+        // TODO: I Don't think this method is ever called.
         // In this case, POST to "/content" and PUT to "/content/<content_id>"
-        var the_url = this._id === undefined ? "/content/" : "/content/" + this.content_id;
+        var the_url = this.content_id === undefined ? "/content/" : "/content/" + this.content_id;
         return the_url;
     }
 });

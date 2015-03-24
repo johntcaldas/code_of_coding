@@ -17,6 +17,10 @@ COC.views.BodyContainer = Backbone.View.extend({
             edit_post_modal: null
         };
 
+        // Set up the global alert view. Any subviews (or any part of the code really) can alert the user via this
+        // single view.
+        COC.views.alert_view = new COC.views.Alert({ el: this.$el.find("#body_container_alert_attach_point") });
+
         this.initializePostEditorModal();
 
         this.listenToLoginKeypress();

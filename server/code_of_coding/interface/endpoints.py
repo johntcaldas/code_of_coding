@@ -62,12 +62,13 @@ def get_content(content_id):
     return jsonify(ret)
 
 
-@app.route("/content/<content_id>", methods=['PUT'])
+@app.route("/content/", methods=['PUT'])
 @auth
-def update_content(content_id):
+def update_content():
     content_data = request.get_json()
-    app.logger.info("update_content() - content_id={0}, data={1}".format(content_id, content_data))
+    app.logger.info("update_content() - data={0}".format(content_data))
 
+    content_id = content_data['content_id']
     html = content_data['html']
 
     content_service = ContentService()

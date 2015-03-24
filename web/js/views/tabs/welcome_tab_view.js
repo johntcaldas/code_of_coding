@@ -13,6 +13,9 @@ window.COC.views.Welcome = Backbone.View.extend({
         this.inline_ckeditor = null;
         this.content_url = COC.server_url_root + "/content/" + this.content_id;
 
+        // This view alerts via the application-wide alert view provided by the Body Container.
+        this.alert_view = COC.views.alert_view;
+
         this.render();
 
 
@@ -67,30 +70,33 @@ window.COC.views.Welcome = Backbone.View.extend({
 
     save_edits_to_server: function (event) {
 
-        var data = JSON.stringify({
+        this.model.set({
             "html": this.inline_ckeditor.getData()
         });
 
-        $.ajax({
-            type: "PUT",
-            beforeSend: function (request)
-            {
-                request.setRequestHeader("X-AuthToken", COC.session_token);
-            },
-            contentType: "application/json",
-            url: this.content_url,
-            data: data,
-            success: this.handle_save_response.bind(this),
-            error: function() {
-                alert("error saving to server");
-            }
+        this.model.save({}, {
+            success: this.post_to_server_success.bind(this),
+            error: this.post_to_server_error.bind(this)
         });
     },
 
-    handle_save_response: function (data, textStatus, jqXHR) {
-        // TODO: provide some sort of visual feedback to the user.
-        if (data['success'] == false) {
-            alert("save to server unsuccessful");
+    post_to_server_success: function (model, response, options) {
+
+        if (!response.success) {
+            this.post_to_server_error(model, response, options);
+            return;
         }
+
+        this.alert_view.show_alert("Welcome tab saved!", "alert-success");
+    },
+
+    post_to_server_error: function (model, response, options) {
+        /* Example error response contains:
+         response.statusText = "UNAUTHORIZED"
+         response.responseText = "Authentication required."
+         options.url = "http://127.0.0.1:5000/posts/"
+         options.headers = { X-AuthToken: "aad913fc06dc4e86ba0378990aff3ce9" }
+         */
+        this.alert_view.show_alert("Error posting to server!", "alert-danger");
     }
 });

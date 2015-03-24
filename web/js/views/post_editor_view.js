@@ -24,6 +24,9 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.bottom_space_dom_id = null;   // The "bottom space" of the CKEditor (footer).
         this.edit_mode = false;            // Will be set to true if we enter "edit mode". (eg. someone calls set_post).
 
+        // This view alerts via the application-wide alert view provided by the Body Container.
+        this.alert_view = COC.views.alert_view;
+
         // Grab references to the elements we're going to be manipulating from this view.
         this.elements = {
             summary_editor_text_area : this.$el.find("#summary_ckeditor"),
@@ -33,8 +36,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             tags_txt : this.$el.find("#tags_txt"),
             post_btn : this.$el.find("#post_btn"),
             top_space_div : this.$el.find("#top_space"),
-            bottom_space_div : this.$el.find("#bottom_space"),
-            alert_view : new COC.views.Alert({ el: this.$el.find("#post_blog_alert_attach_point") })
+            bottom_space_div : this.$el.find("#bottom_space")
         };
 
         // Make the top and bottom space ids unique (to support multiple editors)
@@ -122,25 +124,25 @@ window.COC.views.PostEditor = Backbone.View.extend({
         // Validate input.
         var summary_html = CKEDITOR.instances[this.summary_editor_dom_id].getData();
         if (!summary_html || summary_html == null || summary_html == "") {
-            this.elements.alert_view.show_alert("This post needs a summary!", "alert-danger");
+            this.alert_view.show_alert("This post needs a summary!", "alert-danger");
             return
         }
 
         var post_html = CKEDITOR.instances[this.post_editor_dom_id].getData();
         if (!post_html || post_html == null || post_html == "") {
-            this.elements.alert_view.show_alert("Write a post first!", "alert-danger");
+            this.alert_view.show_alert("Write a post first!", "alert-danger");
             return;
         }
 
         var title = this.elements.title_txt.val();
         if (!title || title == null || title == "") {
-            this.elements.alert_view.show_alert("You might want to give that post a title!", "alert-danger");
+            this.alert_view.show_alert("You might want to give that post a title!", "alert-danger");
             return;
         }
 
         var tags = this.elements.tags_txt.val();
         if (!tags || tags == null || tags == "") {
-            this.elements.alert_view.show_alert("You might want to come up with some tags!", "alert-danger");
+            this.alert_view.show_alert("You might want to come up with some tags!", "alert-danger");
             return;
         }
 
@@ -182,7 +184,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             return;
         }
 
-        this.elements.alert_view.show_alert("Post submitted!", "alert-success");
+        this.alert_view.show_alert("Post submitted!", "alert-success");
 
         CKEDITOR.instances[this.summary_editor_dom_id].setData("Yet another summary.");
         CKEDITOR.instances[this.post_editor_dom_id].setData("Feel like writing something else?");
@@ -200,7 +202,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             options.url = "http://127.0.0.1:5000/posts/"
             options.headers = { X-AuthToken: "aad913fc06dc4e86ba0378990aff3ce9" }
          */
-        this.elements.alert_view.show_alert("Error posting to server!", "alert-danger");
+        this.alert_view.show_alert("Error posting to server!", "alert-danger");
         this.post_to_server_complete();
     },
 
