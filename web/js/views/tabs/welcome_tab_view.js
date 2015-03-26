@@ -63,9 +63,11 @@ window.COC.views.Welcome = Backbone.View.extend({
         this.inline_ckeditor = CKEDITOR.inline("welcome_tab_content");
 
         // Listen for changes, and save them to the server.
-        this.inline_ckeditor.on("change", function(event){
-            this.save_edits_to_server(event);
-        }.bind(this))
+        this.inline_ckeditor.on("blur", function(event){
+            if (event.editor.checkDirty()) {
+                this.save_edits_to_server(event);
+            }
+        }.bind(this));
     },
 
     save_edits_to_server: function (event) {
