@@ -12,7 +12,8 @@
         util: {},
 
         // The root url of the web service interface.
-        server_url_root: "http://127.0.0.1:5000",
+        server_url_root: "http://codeofcoding.com:8251",
+
 
         // The root url of the website.
         url_root: location.protocol + "//" + location.host,
@@ -26,6 +27,11 @@
         fetching_posts: false,   // Useful in post_list_view and post_view.
         fetching_content: false  // Useful everywhere.
     };
+
+    // If the location isn't codeofcoding.com, then the site is likely running on localhost.
+    if(location.hostname !== "www.codeofcoding.com" && location.hostname !== "codeofcoding.com") {
+        COC.server_url_root = "http://127.0.0.1:5000";
+    }
 
     //************************************************
     // Utilities                                     *
