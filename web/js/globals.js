@@ -108,7 +108,8 @@
                 dataType: "json",
                 success: success_callback,
                 error: function() {
-                    alert("error logging");
+                    var error_msg = "We've encountered a server communication difficulty.";
+                    COC.views.alert_view.show_alert(error_msg,"alert-danger")
                 }
             });
         };

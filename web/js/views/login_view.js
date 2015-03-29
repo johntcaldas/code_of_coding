@@ -79,8 +79,9 @@ window.COC.views.Login = Backbone.View.extend({
             dataType: "json",
             success: this.handle_login_response.bind(this),
             error: function() {
-                alert("error logging");
-            }
+                var error_msg = "There was an error communicating with the server.";
+                this.elements.alert_view.show_alert(error_msg, "alert-danger");
+            }.bind(this)
         });
     },
 

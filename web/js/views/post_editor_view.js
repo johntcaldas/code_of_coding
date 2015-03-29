@@ -202,7 +202,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
             options.url = "http://127.0.0.1:5000/posts/"
             options.headers = { X-AuthToken: "aad913fc06dc4e86ba0378990aff3ce9" }
          */
-        this.alert_view.show_alert("Error posting to server!", "alert-danger");
+        this.alert_view.show_alert("There was an error communicating with the server.", "alert-danger");
         this.post_to_server_complete();
     },
 
