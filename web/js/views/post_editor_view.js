@@ -191,6 +191,7 @@ window.COC.views.PostEditor = Backbone.View.extend({
         this.elements.tags_txt.val("");
         this.elements.title_txt.val("");
         this.edit_mode = false;
+        this.post = null;
 
         this.post_to_server_complete();
     },
